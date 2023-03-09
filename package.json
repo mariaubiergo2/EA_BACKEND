@@ -1,0 +1,34 @@
+{
+  "name": "sem5-grup",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon ./src/app.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^7.0.1",
+    "multer": "^1.4.5-lts.1"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.13",
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.17",
+    "@types/mongoose": "^5.11.97",
+    "@types/multer": "^1.4.7"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mariaubiergo2/EA-SEM5.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mariaubiergo2/EA-SEM5/issues"
+  },
+  "homepage": "https://github.com/mariaubiergo2/EA-SEM5#readme",
+  "description": "We are going to use:"
+}
