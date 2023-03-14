@@ -1,5 +1,6 @@
 import {  Schema, Types, model, Model } from "mongoose";
 import { User } from "../interfaces/user.interface";
+import { ObjectId } from "mongodb";
 
 const UserSchema = new Schema<User>(
     {
@@ -19,6 +20,26 @@ const UserSchema = new Schema<User>(
             type: String,
             required:true,
         },
+        username:{
+            type: String,
+            required:true,
+        },
+        friends:{
+            type: [Schema.Types.ObjectId],
+            ref:'users',
+        },
+        level:{
+            type: Number,
+            required:true,
+        },
+        record:{
+            type: [Schema.Types.ObjectId],
+            ref:'challenges',
+        },
+        exp:{
+            type: Number,
+            required:true,
+        }
     },
     {
         timestamps: true,

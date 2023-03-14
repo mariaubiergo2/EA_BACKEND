@@ -3,6 +3,10 @@ import { Challenge } from "../interfaces/challenge.interface";
 
 const ChallengeSchema = new Schema<Challenge>(
     {
+        name:{
+            type: String,
+            required:true,
+        },
         lat:{
             type: String,
             required:true,
