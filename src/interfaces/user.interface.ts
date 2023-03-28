@@ -10,4 +10,5 @@ export interface User {
     level: Number;
     record?: ObjectId[]; //Challenges que ha finalitzat
     exp: Number;
+    role: "user" | "admin";
 }
