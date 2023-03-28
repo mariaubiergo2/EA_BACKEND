@@ -12,6 +12,10 @@ const UserSchema = new Schema<User>(
             type: String,
             required:true,
         },
+        username:{
+            type: String,
+            required:true,
+        },
         email:{
             type: String,
             required:true,
@@ -20,24 +24,25 @@ const UserSchema = new Schema<User>(
             type: String,
             required:true,
         },
-        username:{
-            type: String,
-            required:true,
-        },
-        friends:{
-            type: [Schema.Types.ObjectId],
-            ref:'users',
-        },
         level:{
             type: Number,
-            required:true,
+            required:false,
+        },
+        exp:{
+            type: Number,
+            required:false,
         },
         record:{
             type: [Schema.Types.ObjectId],
             ref:'challenges',
         },
-        exp:{
-            type: Number,
+        friends:{
+            type: [Schema.Types.ObjectId],
+            ref:'users',
+        },
+        role:{
+            type: String,
+            enum: ["user", "admin"],
             required:true,
         }
     },

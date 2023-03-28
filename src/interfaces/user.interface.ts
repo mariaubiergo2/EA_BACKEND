@@ -3,11 +3,12 @@ import { ObjectId } from "mongodb";
 export interface User {
     name: string;
     surname: string;
+    username: string;
     email: string;
     password: string;
-    username: string;
+    level: Number;          
+    exp: Number;            
     friends?: ObjectId[];
-    level: Number;
-    record?: ObjectId[]; //Challenges que ha finalitzat
-    exp: Number;
+    record?: ObjectId[];    //Challenges que ha finalitzat
+    role: "user" | "admin";
 }

@@ -7,12 +7,12 @@ const insertUser = async(item: User) => {
     return responseInsert;
 };
 
-const getUsers = async() => {
+const get_Users = async() => {
     const responseItem = await UserModel.find({});
     return responseItem;
 };
 
-const getUser = async(id: string) => {
+const get_User = async(id: string) => {
     const responseItem = await UserModel.findOne({_id: id});
     return responseItem;
 };
@@ -28,4 +28,4 @@ const deleteUser = async(id: string) => {
 }
 
 
-export {insertUser, getUser, getUsers, updateUser, deleteUser};
+export {insertUser, get_User, get_Users, updateUser, deleteUser};

@@ -1,8 +1,8 @@
 import { Request,Response } from "express";
-import { insertUser,getUsers,getUser,updateUser,deleteUser} from "../services/user";
+import { insertUser,get_Users,get_User,updateUser,deleteUser} from "../services/user";
 import { handleHttp } from "../utils/error.handle";
 
-const getPerson=async({params}:Request,res:Response)=>{
+const getUser=async({params}:Request,res:Response)=>{
     try{
         const {idUser}=params;
         const response=await getUser(idUser);
@@ -13,7 +13,7 @@ const getPerson=async({params}:Request,res:Response)=>{
     }
 };
 
-const getPeople=async(req:Request,res:Response)=>{
+const getUsers=async(req:Request,res:Response)=>{
     try{
         const response=await getUsers();
         res.send(response);
@@ -51,4 +51,4 @@ const deletePerson=async ({params}:Request,res:Response)=>{
     }
 };
 
-export{getPerson,getPeople,postPerson,updatePerson,deletePerson};
+export{getUser,getUsers,postPerson,updatePerson,deletePerson};
