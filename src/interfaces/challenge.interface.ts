@@ -6,5 +6,5 @@ export interface Challenge {
     long: string;
     descr: string;
     exp: number;
-    users?: ObjectId[];
+    users?: ObjectId[]; //Los users que lo estan haciendo 
 }

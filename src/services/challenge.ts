@@ -8,7 +8,7 @@ const insertChallenge = async (item:Challenge) => {
 };
 
 const getChallenges = async() => {
-    const responseItem = await ChallengeModel.find({}).populate('users');
+    const responseItem = await ChallengeModel.find({}).limit(20);
     return responseItem;
 };
 
