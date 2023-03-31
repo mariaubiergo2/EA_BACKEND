@@ -44,6 +44,10 @@ const UserSchema = new Schema<User>(
             type: String,
             enum: ["user", "admin"],
             required:true,
+        },
+        active:{
+            type: Boolean,
+            required:true,
         }
     },
     {

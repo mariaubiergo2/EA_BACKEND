@@ -11,4 +11,5 @@ export interface User {
     friends?: ObjectId[];
     record?: ObjectId[];    //Challenges que ha finalitzat
     role: "user" | "admin";
+    active: boolean;
 }
