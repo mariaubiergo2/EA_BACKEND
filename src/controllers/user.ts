@@ -1,8 +1,18 @@
 import { Request,Response } from "express";
-import {delete_User, disable_User, add_Challenge, delete_Friend, add_Friend, update_User, sign_up, log_in, get_User, get_Users } from "../services/user";
-import { handleHttp } from "../utils/error.handle";
 
-const getUser=async({params}:Request,res:Response)=>{
+import { handleHttp } from "../utils/error.handle";
+import { get_Users, get_User, log_in, sign_up, update_User, add_Friend, delete_Friend, add_Challenge, disable_User, delete_User } from "../services/user";
+
+const getUsers = async(req:Request, res:Response)=>{
+    try{
+        const response = await get_Users();
+        res.send(response);
+    } catch(e){
+        handleHttp(res,"ERROR_GET_USERS");
+    }
+};
+
+const getUser = async({params}:Request, res:Response)=>{
     try{
         const {idUser} = params;
         const response = await get_User(idUser);
@@ -13,16 +23,7 @@ const getUser=async({params}:Request,res:Response)=>{
     }
 };
 
-const getUsers = async(req:Request,res:Response)=>{
-    try{
-        const response = await get_Users();
-        res.send(response);
-    } catch(e){
-        handleHttp(res,"ERROR_GET_USERS");
-    }
-};
-
-const login = async({params}:Request,res:Response)=>{
+const login = async({params}:Request, res:Response)=>{
     try{
         const {email, password} = params;
         const response = await log_in(email, password);
@@ -32,7 +33,7 @@ const login = async({params}:Request,res:Response)=>{
     }
 };
 
-const signup = async({body}:Request,res:Response)=>{
+const signup = async({body}:Request, res:Response)=>{
     try{
         const response = await sign_up(body);
         res.send(response);
@@ -41,17 +42,37 @@ const signup = async({body}:Request,res:Response)=>{
     }
 };
 
-const updateUser = async ({params,body}:Request,res:Response)=>{
+const updateUser = async ({params,body}:Request, res:Response)=>{
     try{
         const {idUser} = params;
-        const response = await update_User(idUser,body);
+        const response = await update_User(idUser, body);
         res.send(response);
     } catch(e){
         handleHttp(res,"ERROR_UPDATE_USER");
     }
 };
 
-const addChallenge = async ({params}:Request,res:Response)=>{
+const addFriend = async ({params}:Request, res:Response)=>{
+    try{
+        const {idUser, usernameFriend} = params;
+        const responsePerson = await add_Friend(idUser, usernameFriend);
+        res.send(responsePerson);
+    }catch(e){
+        handleHttp(res,"ERROR_POST_USER");
+    }
+};
+
+const deleteFriend = async ({params}:Request, res:Response)=>{
+    try{
+        const {idUser} = params;
+        const response = await delete_Friend(idUser);
+        res.send(response);
+    } catch(e){
+        handleHttp(res,"ERROR_DELETE_USER");
+    }
+};
+
+const addChallenge = async ({params}:Request, res:Response)=>{
     try{
         const {idUser, namechallenge} = params;
         const responsePerson = await add_Challenge(idUser, namechallenge);
@@ -61,37 +82,7 @@ const addChallenge = async ({params}:Request,res:Response)=>{
     }
 };
 
-const deleteFriend = async ({params}:Request,res:Response)=>{
-    try{
-        const {idUser}=params;
-        const response=await delete_Friend(idUser);
-        res.send(response);
-    } catch(e){
-        handleHttp(res,"ERROR_DELETE_USER");
-    }
-};
-
-const addFriend = async ({params}:Request,res:Response)=>{
-    try{
-        const {idUser, usernameFriend} = params;
-        const responsePerson=await add_Friend(idUser, usernameFriend);
-        res.send(responsePerson);
-    }catch(e){
-        handleHttp(res,"ERROR_POST_USER");
-    }
-};
-
-const deleteUser = async ({params}:Request,res:Response)=>{
-    try{
-        const {idUser} = params;
-        const response = await delete_User(idUser);
-        res.send(response);
-    } catch(e){
-        handleHttp(res,"ERROR_DELETE_USER");
-    }
-};
-
-const disableUser = async ({params}:Request,res:Response)=>{
+const disableUser = async ({params}:Request, res:Response)=>{
     try{
         const {idUser} = params;
         const response = await disable_User(idUser);
@@ -101,4 +92,14 @@ const disableUser = async ({params}:Request,res:Response)=>{
     }
 };
 
-export{ deleteUser, disableUser, addChallenge, deleteFriend, addFriend, updateUser, signup, login, getUser, getUsers };
+const deleteUser = async ({params}:Request, res:Response)=>{
+    try{
+        const {idUser} = params;
+        const response = await delete_User(idUser);
+        res.send(response);
+    } catch(e){
+        handleHttp(res,"ERROR_DELETE_USER");
+    }
+};
+
+export{ getUsers, getUser, login, signup, updateUser, addFriend, deleteFriend, addChallenge, disableUser, deleteUser };

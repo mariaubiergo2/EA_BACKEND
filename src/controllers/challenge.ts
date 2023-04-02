@@ -23,7 +23,7 @@ const getChallenge = async ({params}:Request, res:Response) => {
     }
 };
 
-const addChallenge = async ({body}:Request,res:Response)=>{
+const addChallenge = async ({body}:Request, res:Response)=>{
     try{
         const response = await add_Challenge(body);
         res.send(response);
@@ -44,7 +44,7 @@ const updateChallenge = async ({params, body}:Request, res:Response) => {
 
 const acceptChallenge = async ({body}:Request,res:Response)=>{
     try{
-        const { idUser, idChallenge } = body;
+        const {idUser, idChallenge} = body;
         const response = await accept_Challenge(idUser, idChallenge);
         res.send(response);
     }catch(e){

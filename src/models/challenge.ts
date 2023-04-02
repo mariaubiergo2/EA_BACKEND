@@ -20,7 +20,7 @@ const ChallengeSchema = new Schema<Challenge>(
             type: [Schema.Types.ObjectId],
             ref:'users',
         },
-        xp:{
+        exp:{
             type: Number,
             required:true,
         },
