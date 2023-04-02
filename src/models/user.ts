@@ -1,6 +1,6 @@
-import {  Schema, Types, model, Model } from "mongoose";
+import { Schema, model } from "mongoose";
+
 import { User } from "../interfaces/user.interface";
-import { ObjectId } from "mongodb";
 
 const UserSchema = new Schema<User>(
     {

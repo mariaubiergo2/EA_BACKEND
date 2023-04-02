@@ -5,6 +5,7 @@ export interface Challenge {
     lat: string;
     long: string;
     descr: string;
-    exp: number;
-    users?: ObjectId[]; //Los users que lo estan haciendo 
+    exp: number; //Amount of experience that the challenge will give to the users
+    users?: ObjectId[]; //Users that are currently doing the challenge
+    active: boolean; //When an admin disables a challenge it is set false
 }

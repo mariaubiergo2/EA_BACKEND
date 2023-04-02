@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { deleteUser, disableUser, addChallenge, deleteFriend, addFriend, updateUser, signup, login, getUser, getUsers } from "../controllers/user";
+
+import { getUsers, getUser, login, signup, updateUser, addFriend, deleteFriend, addChallenge, disableUser, deleteUser } from "../controllers/user";
 
 const router = Router();
 
@@ -18,4 +19,4 @@ router.post("/challenges/add/:idUser/:nameChallenge", addChallenge); //Adds a ch
 router.delete("/disable/:idUser", disableUser); //Disable a user so that he or she is not visible
 router.delete("/delete/:idUser", deleteUser); //Remove a user permanently
 
-export {router};
+export { router };

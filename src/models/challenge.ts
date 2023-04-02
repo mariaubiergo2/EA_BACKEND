@@ -1,4 +1,5 @@
-import {  Schema, Types, model, Model } from "mongoose";
+import { Schema, model } from "mongoose";
+
 import { Challenge } from "../interfaces/challenge.interface";
 
 const ChallengeSchema = new Schema<Challenge>(
@@ -27,6 +28,10 @@ const ChallengeSchema = new Schema<Challenge>(
             type: String,
             required:true,
         },
+        active:{
+            type: Boolean,
+            required:true,
+        }
     },
     {
         timestamps: true,
@@ -34,9 +39,6 @@ const ChallengeSchema = new Schema<Challenge>(
     }
 );
 
-//Once the Schema is created, it must be implemented
-//1st argument ('users') is the name of the collection
-//2nd argument (UserSchema) is what it feds it
 const ChallengeModel = model('challenges', ChallengeSchema);
 
 export default ChallengeModel;

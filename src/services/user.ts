@@ -1,4 +1,5 @@
 import { Types } from "mongoose";
+
 import { User } from "../interfaces/user.interface";
 import UserModel from "../models/user";
 import ChallengeModel from "../models/user";
@@ -66,4 +67,4 @@ const log_in = async(credential: string, password: string) => {
     return responseItem;
 }
 
-export {delete_User, disable_User, add_Challenge, delete_Friend, add_Friend, update_User, sign_up, log_in, get_User, get_Users};
+export { delete_User, disable_User, add_Challenge, delete_Friend, add_Friend, update_User, sign_up, log_in, get_User, get_Users };
