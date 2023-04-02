@@ -1,23 +1,21 @@
-/** Esta ruta nos va a devolver un array de objetos, que va a venir de una base de datos (carpeta config)*/
-
-import { Request, Response, Router } from "express";
+import { Router } from "express";
 import { deleteUser, disableUser, addChallenge, deleteFriend, addFriend, updateUser, signup, login, getUser, getUsers } from "../controllers/user";
 
-const router = Router(); //es el manejador de las rutas, las interpreta, con esto podremos crear los GET, POST ....
+const router = Router();
 
-router.get("/all", getUsers); 
-router.get("/:idUser", getUser); 
+router.get("/all", getUsers); //Get all users
+router.get("/:idUser", getUser); //Get only the information of one user
 
-router.post("/login/:email/:password", login);
-router.post("/signup", signup); 
-router.post("/update/:idUser", updateUser); 
+router.post("/login/:email/:password", login); //Lets a user to log in
+router.post("/signup", signup); //Lets a user to register a new account
+router.post("/update/:idUser", updateUser); //Lets a user to update his or her account details
 
-router.post("/friend/add/:idUser/:usernameFriend", addFriend);
-router.post("/friend/delete/:idUser/:usernameFriend", deleteFriend);
+router.post("/friend/add/:idUser/:usernameFriend", addFriend); //Add a user to your friends list
+router.post("/friend/delete/:idUser/:usernameFriend", deleteFriend); //Remove a user from your friends list
 
-router.post("/challenges/add/:idUser/:nameChallenge", addChallenge);
+router.post("/challenges/add/:idUser/:nameChallenge", addChallenge); //Adds a challenge to the list of completed challenges that a user has
 
-router.delete("/disable/:idUser", disableUser);
-router.delete("/delete/:idUser", deleteUser);
+router.delete("/disable/:idUser", disableUser); //Disable a user so that he or she is not visible
+router.delete("/delete/:idUser", deleteUser); //Remove a user permanently
 
 export {router};
