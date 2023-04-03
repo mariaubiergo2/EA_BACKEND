@@ -49,7 +49,7 @@ const add_Challenge = async(idUser: string, nameChallenge: string) => {
 };
 
 const disable_User = async(idUser: string) => {
-    const responseItem = await UserModel.findOneAndUpdate({_id: idUser}, { active: false });
+    const responseItem = await UserModel.findOneAndUpdate({_id: idUser}, { active: false }, {new:true});
     return responseItem;
 };
 
