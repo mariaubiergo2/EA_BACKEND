@@ -8,7 +8,7 @@ router.get("/all", get_Challenges);
 router.get("/:idChallenge", get_Challenge);
 router.post("/", checkAdmin, post_Challenge);
 router.put("/:idChallenge", checkAdmin, update_Challenge);
-router.delete("/:idChallenge", checkAdmin, delete_Challenge);
+router.delete("/delete/:idChallenge", checkAdmin, delete_Challenge);
 router.post("/accept",accept_Challenge);
 
 export{router};
