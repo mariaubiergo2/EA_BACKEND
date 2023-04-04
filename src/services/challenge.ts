@@ -2,42 +2,50 @@ import { Types } from "mongoose";
 
 import { Challenge } from '../interfaces/challenge.interface';
 import ChallengeModel from "../models/challenge";
+import UserModel from "../models/user";
 
 const get_Challenges = async() => {
-    const responseItem = await ChallengeModel.find({}).limit(20);
+    const responseItem = await ChallengeModel.find({}).limit(10);
     return responseItem;
 };
 
-const get_Challenge = async (id: string) => {
-    const responseItem = await ChallengeModel.findOne({_id: id}); 
+const get_Challenge = async (idChallenge: string) => {
+    const responseItem = await ChallengeModel.findById({_id: idChallenge}); 
+    return responseItem;
+};
+
+const get_ChallengeCount = async() => {
+    const responseItem = await ChallengeModel.find({}).count();
     return responseItem;
 };
 
 const add_Challenge = async (item: Challenge) => {
+    item.active = true;
     const responseInsert = await ChallengeModel.create(item);
     return responseInsert;
 };
 
-const update_Challenge = async (id: string, data: Challenge) => {
-    const responseItem = await ChallengeModel.findOneAndUpdate({_id: id}, data, {new: true}); 
+const update_Challenge = async (idChallenge: string, data: Challenge) => {
+    const responseItem = await ChallengeModel.findByIdAndUpdate({_id: idChallenge}, data, {new: true}); 
     return responseItem;
 };
 
-const accept_Challenge = async (idUser: string, id: string) => {
-    const responseItem = await ChallengeModel.findOneAndUpdate({_id: id}, 
-        {$addToSet: {users: new Types.ObjectId(idUser)}}, {new:true}); 
+const accept_Challenge = async (idUser: string, idChallenge: string) => {
+    const user = await UserModel.findById({_id: idUser});
+    const responseItem = await ChallengeModel.findByIdAndUpdate({_id: idChallenge}, 
+        {$addToSet: {users: new Types.ObjectId(user?.id)}}, {new: true}); 
     return responseItem;
 };
 
-const disable_Challenge = async (id: string) => {
-    const responseItem = await ChallengeModel.findOneAndUpdate({_id: id}, 
-        {$addToSet: {active: false}}, {new:true});
+const disable_Challenge = async (idChallenge: string) => {
+    const responseItem = await ChallengeModel.findByIdAndUpdate({_id: idChallenge}, 
+        {active: false}, {new: true});
     return responseItem;
 };
 
-const delete_Challenge = async (id: string) => {
-    const responseItem = await ChallengeModel.deleteOne({_id: id});
+const delete_Challenge = async (idChallenge: string) => {
+    const responseItem = await ChallengeModel.findByIdAndRemove({_id: idChallenge});
     return responseItem;
 };
 
-export{ get_Challenges, get_Challenge, add_Challenge, update_Challenge, accept_Challenge, disable_Challenge, delete_Challenge };
+export{ get_Challenges, get_Challenge, get_ChallengeCount, add_Challenge, update_Challenge, accept_Challenge, disable_Challenge, delete_Challenge };

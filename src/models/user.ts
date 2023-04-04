@@ -6,48 +6,56 @@ const UserSchema = new Schema<User>(
     {
         name:{
             type: String,
-            required:true,
+            required: true,
         },
         surname:{
             type: String,
-            required:true,
+            required: true,
+        },
+        imageURL:{
+            type: String,
+            required: false,
         },
         username:{
             type: String,
-            required:true,
+            required: true,
         },
         email:{
             type: String,
-            required:true,
+            required: true,
         },
         password:{
             type: String,
-            required:true,
+            required: true,
         },
         level:{
             type: Number,
-            required:false,
+            required: false,
         },
         exp:{
             type: Number,
-            required:false,
+            required: false,
+        },
+        followers:{
+            type: [Schema.Types.ObjectId],
+            ref: 'users',
+        },
+        following:{
+            type: [Schema.Types.ObjectId],
+            ref: 'users',
         },
         record:{
             type: [Schema.Types.ObjectId],
-            ref:'challenges',
-        },
-        friends:{
-            type: [Schema.Types.ObjectId],
-            ref:'users',
+            ref: 'challenges',
         },
         role:{
             type: String,
             enum: ["user", "admin"],
-            required:true,
+            required: false,
         },
         active:{
             type: Boolean,
-            required:true,
+            required: false,
         }
     },
     {
