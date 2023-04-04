@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 
 import { handleHttp } from "../utils/error.handle";
-import { get_Challenges, get_Challenge, get_ChallengeCount, add_Challenge, update_Challenge, accept_Challenge, disable_Challenge, delete_Challenge } from "../services/challenge"; 
+import { get_Challenges, get_Challenge, get_ChallengeCount, add_Challenge, update_Challenge, 
+    accept_Challenge, disable_Challenge, delete_Challenge } from "../services/challenge"; 
 
 const getChallenges = async (req:Request, res:Response) => {
     try{
@@ -81,4 +82,5 @@ const deleteChallenge = async ({params}:Request, res:Response) => {
     }
 };
 
-export{ getChallenges, getChallenge, getChallengeCount, addChallenge, updateChallenge, acceptChallenge, disableChallenge, deleteChallenge };
+export{ getChallenges, getChallenge, getChallengeCount, addChallenge, updateChallenge, 
+    acceptChallenge, disableChallenge, deleteChallenge };

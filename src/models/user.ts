@@ -4,56 +4,56 @@ import { User } from "../interfaces/user.interface";
 
 const UserSchema = new Schema<User>(
     {
-        name:{
+        name: {
             type: String,
             required: true,
         },
-        surname:{
+        surname: {
             type: String,
             required: true,
         },
-        imageURL:{
+        imageURL: {
             type: String,
             required: false,
         },
-        username:{
+        username: {
             type: String,
             required: true,
         },
-        email:{
+        email: {
             type: String,
             required: true,
         },
-        password:{
+        password: {
             type: String,
             required: true,
         },
-        level:{
+        level: {
             type: Number,
             required: false,
         },
-        exp:{
+        exp: {
             type: Number,
             required: false,
         },
-        followers:{
+        followers: {
             type: [Schema.Types.ObjectId],
             ref: 'users',
         },
-        following:{
+        following: {
             type: [Schema.Types.ObjectId],
             ref: 'users',
         },
-        record:{
+        record: {
             type: [Schema.Types.ObjectId],
             ref: 'challenges',
         },
-        role:{
+        role: {
             type: String,
             enum: ["user", "admin"],
             required: false,
         },
-        active:{
+        active: {
             type: Boolean,
             required: false,
         }

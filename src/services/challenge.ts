@@ -48,4 +48,5 @@ const delete_Challenge = async (idChallenge: string) => {
     return responseItem;
 };
 
-export{ get_Challenges, get_Challenge, get_ChallengeCount, add_Challenge, update_Challenge, accept_Challenge, disable_Challenge, delete_Challenge };
+export{ get_Challenges, get_Challenge, get_ChallengeCount, add_Challenge, 
+    update_Challenge, accept_Challenge, disable_Challenge, delete_Challenge };

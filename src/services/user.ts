@@ -88,4 +88,5 @@ const delete_User = async(idUser: string) => {
     return responseItem;
 };
 
-export { get_Users, get_User, get_UserCount, get_UsersProfile, get_UserProfile, log_in, sign_up, update_User, add_Follow, delete_Follow, add_Challenge, disable_User, delete_User };
+export { get_Users, get_User, get_UserCount, get_UsersProfile, get_UserProfile, log_in, 
+    sign_up, update_User, add_Follow, delete_Follow, add_Challenge, disable_User, delete_User };

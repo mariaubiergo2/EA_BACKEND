@@ -4,31 +4,31 @@ import { Challenge } from "../interfaces/challenge.interface";
 
 const ChallengeSchema = new Schema<Challenge>(
     {
-        name:{
+        name: {
             type: String,
             required: true,
         },
-        descr:{
+        descr: {
             type: String,
             required: false,
         },
-        lat:{
+        lat: {
             type: String,
             required: true,
         },
-        long:{
+        long: {
             type: String,
             required: true,
         },
-        exp:{
+        exp: {
             type: Number,
             required: true,
         },
-        users:{
+        users: {
             type: [Schema.Types.ObjectId],
             ref: 'users',
         },
-        active:{
+        active: {
             type: Boolean,
             required: false,
         }
