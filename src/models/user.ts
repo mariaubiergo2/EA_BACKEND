@@ -1,48 +1,61 @@
-import {  Schema, Types, model, Model } from "mongoose";
+import { Schema, model } from "mongoose";
+
 import { User } from "../interfaces/user.interface";
-import { ObjectId } from "mongodb";
 
 const UserSchema = new Schema<User>(
     {
-        name:{
+        name: {
             type: String,
-            required:true,
+            required: true,
         },
-        surname:{
+        surname: {
             type: String,
-            required:true,
+            required: true,
         },
-        email:{
+        imageURL: {
             type: String,
-            required:true,
+            required: false,
         },
-        password:{
+        username: {
             type: String,
-            required:true,
+            required: true,
         },
-        username:{
+        email: {
             type: String,
-            required:true,
+            required: true,
         },
-        friends:{
-            type: [Schema.Types.ObjectId],
-            ref:'users',
+        password: {
+            type: String,
+            required: true,
         },
-        level:{
+        level: {
             type: Number,
-            required:true,
+            required: false,
         },
-        record:{
-            type: [Schema.Types.ObjectId],
-            ref:'challenges',
-        },
-        exp:{
+        exp: {
             type: Number,
-            required:true,
+            required: false,
         },
-        role:{
+        followers: {
+            type: [Schema.Types.ObjectId],
+            ref: 'users',
+        },
+        following: {
+            type: [Schema.Types.ObjectId],
+            ref: 'users',
+        },
+        record: {
+            type: [Schema.Types.ObjectId],
+            ref: 'challenges',
+        },
+        role: {
             type: String,
-            required:true,
+            enum: ["user", "admin"],
+            required: false,
+        },
+        active: {
+            type: Boolean,
+            required: false,
         }
         
     },

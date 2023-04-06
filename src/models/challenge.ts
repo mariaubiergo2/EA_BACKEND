@@ -1,32 +1,37 @@
-import {  Schema, Types, model, Model } from "mongoose";
+import { Schema, model } from "mongoose";
+
 import { Challenge } from "../interfaces/challenge.interface";
 
 const ChallengeSchema = new Schema<Challenge>(
     {
-        name:{
+        name: {
             type: String,
-            required:true,
+            required: true,
         },
-        lat:{
+        descr: {
             type: String,
-            required:true,
+            required: false,
         },
-        long:{
+        lat: {
             type: String,
-            required:true,
+            required: true,
         },
-        users:{
-            type: [Schema.Types.ObjectId],
-            ref:'users',
+        long: {
+            type: String,
+            required: true,
         },
-        exp:{
+        exp: {
             type: Number,
-            required:true,
+            required: true,
         },
-        descr:{
-            type: String,
-            required:true,
+        users: {
+            type: [Schema.Types.ObjectId],
+            ref: 'users',
         },
+        active: {
+            type: Boolean,
+            required: false,
+        }
     },
     {
         timestamps: true,
@@ -34,9 +39,6 @@ const ChallengeSchema = new Schema<Challenge>(
     }
 );
 
-//Once the Schema is created, it must be implemented
-//1st argument ('users') is the name of the collection
-//2nd argument (UserSchema) is what it feds it
 const ChallengeModel = model('challenges', ChallengeSchema);
 
 export default ChallengeModel;

@@ -28,11 +28,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mariaubiergo2/EA-SEM5.git"
+    "url": "git+https://github.com/marioRelajao/EA_BackendAPI.git"
   },
   "bugs": {
-    "url": "https://github.com/mariaubiergo2/EA-SEM5/issues"
+    "url": "https://github.com/marioRelajao/EA_BackendAPI/issues"
   },
-  "homepage": "https://github.com/mariaubiergo2/EA-SEM5#readme",
+  "homepage": "https://github.com/marioRelajao/EA_BackendAPI#readme",
   "description": "We are going to use:"
 }
