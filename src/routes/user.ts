@@ -1,11 +1,11 @@
 import { Router } from "express";
-
+import { checkAdmin } from "../middleware/session";
 import { getUsers, getUser, getUserCount, getUsersProfile, getUserProfile, login, signup, updateUser, addFollow, deleteFollow, addChallenge, disableUser, deleteUser } from "../controllers/user";
 
 const router = Router();
 
-router.get("/get/all", getUsers); //Get all users
-router.get("/get/:idUser", getUser); //Get only the information of one user
+router.get("/get/all",checkAdmin ,getUsers); //Get all users
+router.get("/get/:idUser", checkAdmin, getUser); //Get only the information of one user
 
 router.get("/count", getUserCount); //Return the total number of active users
 
@@ -23,6 +23,6 @@ router.post("/follow/delete/:idUser/:idFollowed", deleteFollow); //Remove a user
 router.post("/challenges/add/:idUser/:idChallenge", addChallenge); //Adds a challenge to the list of completed challenges that a user has
 
 router.post("/disable/:idUser", disableUser); //Disable a user so that he or she is not visible
-router.delete("/delete/:idUser", deleteUser); //Remove a user permanently
+router.delete("/delete/:idUser", checkAdmin, deleteUser); //Remove a user permanently
 
 export { router };
