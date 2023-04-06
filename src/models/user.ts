@@ -1,24 +1,63 @@
-import {  Schema, Types, model, Model } from "mongoose";
+import { Schema, model } from "mongoose";
+
 import { User } from "../interfaces/user.interface";
 
 const UserSchema = new Schema<User>(
     {
-        name:{
+        name: {
             type: String,
-            required:true,
+            required: true,
         },
-        surname:{
+        surname: {
             type: String,
-            required:true,
+            required: true,
         },
-        email:{
+        imageURL: {
             type: String,
-            required:true,
+            required: false,
         },
-        password:{
+        username: {
             type: String,
-            required:true,
+            required: true,
         },
+        email: {
+            type: String,
+            required: true,
+        },
+        password: {
+            type: String,
+            required: true,
+        },
+        level: {
+            type: Number,
+            required: false,
+        },
+        exp: {
+            type: Number,
+            required: false,
+        },
+        followers: {
+            type: [Schema.Types.ObjectId],
+            ref: 'users',
+        },
+        following: {
+            type: [Schema.Types.ObjectId],
+            ref: 'users',
+        },
+        record: {
+            type: [Schema.Types.ObjectId],
+            ref: 'challenges',
+        },
+        role: {
+            type: String,
+            enum: ["user", "admin"],
+            required: false,
+        },
+        active: {
+            type: Boolean,
+            required: false,
+        }
+        
     },
     {
         timestamps: true,

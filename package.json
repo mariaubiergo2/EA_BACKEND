@@ -9,9 +9,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/jsonwebtoken": "^9.0.1",
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.0.1",
     "multer": "^1.4.5-lts.1"
   },
@@ -24,11 +28,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mariaubiergo2/EA-SEM5.git"
+    "url": "git+https://github.com/marioRelajao/EA_BackendAPI.git"
   },
   "bugs": {
-    "url": "https://github.com/mariaubiergo2/EA-SEM5/issues"
+    "url": "https://github.com/marioRelajao/EA_BackendAPI/issues"
   },
-  "homepage": "https://github.com/mariaubiergo2/EA-SEM5#readme",
+  "homepage": "https://github.com/marioRelajao/EA_BackendAPI#readme",
   "description": "We are going to use:"
 }
