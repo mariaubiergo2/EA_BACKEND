@@ -6,7 +6,7 @@ const router = Router();
 
 //router.get("/get/all",checkAdmin ,getUsers); //Get all users
 router.get("/get/all",getUsers); //Get all users
-router.get("/get/:idUser", checkAdmin, getUser); //Get only the information of one user
+//router.get("/get/:idUser", checkAdmin, getUser); //Get only the information of one user
 router.get("/get/:idUser", getUser); //Get only the information of one user
 
 router.get("/count", getUserCount); //Return the total number of active users
