@@ -4,8 +4,8 @@ import { User } from '../interfaces/user.interface';
 import UserModel from "../models/user";
 import ChallengeModel from "../models/user";
 
-const get_Users = async() => {
-    const responseItem = await UserModel.find({}).limit(10);
+const get_Users = async(pageNumber: number, nPerPage: number) => {
+    const responseItem = await UserModel.find({}).limit(nPerPage).skip((pageNumber - 1)*nPerPage);
     return responseItem;
 };
 
@@ -19,9 +19,9 @@ const get_UserCount = async() => {
     return responseItem;
 };
 
-const get_UsersProfile = async() => {
+const get_UsersProfile = async(pageNumber: number, nPerPage: number) => {
     const responseItem = await UserModel.find({}, {name: 0, surname: 0, 
-        email: 0, password: 0, role: 0, active: 0}).limit(20);
+        email: 0, password: 0, role: 0, active: 0}).limit(nPerPage).skip((pageNumber - 1)*nPerPage);
     return responseItem;
 };
 

@@ -5,13 +5,13 @@ import { getUsers, getUser, getUserCount, getUsersProfile, getUserProfile, login
 const router = Router();
 
 //router.get("/get/all",checkAdmin ,getUsers); //Get all users
-router.get("/get/all",getUsers); //Get all users
+router.get("/get/all/:pageNumber/:nPerPage", getUsers); //Get all users
 //router.get("/get/:idUser", checkAdmin, getUser); //Get only the information of one user
 router.get("/get/:idUser", getUser); //Get only the information of one user
 
 router.get("/count", getUserCount); //Return the total number of active users
 
-router.get("/profile/all", getUsersProfile); //Get all users information profile
+router.get("/profile/all/:pageNumber/:nPerPage", getUsersProfile); //Get all users information profile
 router.get("/profile/:idUser", getUserProfile); //Get only the information of one user profile
 
 router.get("/login/:email/:password", login); //Lets a user to log in

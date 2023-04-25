@@ -4,9 +4,10 @@ import { handleHttp } from "../utils/error.handle";
 import { get_Challenges, get_Challenge, get_ChallengeCount, add_Challenge, update_Challenge, 
     accept_Challenge, disable_Challenge, delete_Challenge } from "../services/challenge"; 
 
-const getChallenges = async (req:Request, res:Response) => {
+const getChallenges = async ({params}:Request, res:Response) => {
     try{
-        const response = await get_Challenges();
+        const {pageNumber, nPerPage} = params;
+        const response = await get_Challenges(Number(pageNumber), Number(nPerPage));
         res.send(response);
     } catch(e){
         handleHttp(res, "ERROR_GET_CHALLENGES");

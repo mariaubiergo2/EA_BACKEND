@@ -4,9 +4,10 @@ import { handleHttp } from "../utils/error.handle";
 import { get_Users, get_User, get_UserCount, get_UsersProfile, get_UserProfile, log_in, 
     sign_up, update_User, add_Follow, delete_Follow, add_Challenge, disable_User, delete_User } from "../services/user";
 
-const getUsers = async(req:Request, res:Response) => {
+const getUsers = async({params}:Request, res:Response) => {
     try{
-        const response = await get_Users();
+        const {pageNumber, nPerPage} = params;
+        const response = await get_Users(Number(pageNumber), Number(nPerPage));
         res.send(response);
     } catch(e){
         handleHttp(res, "ERROR_GET_USERS");
@@ -33,9 +34,10 @@ const getUserCount = async(req:Request, res:Response) => {
     }
 };
 
-const getUsersProfile = async(req:Request, res:Response) => {
+const getUsersProfile = async({params}:Request, res:Response) => {
     try{
-        const response = await get_UsersProfile();
+        const {pageNumber, nPerPage} = params;
+        const response = await get_UsersProfile(Number(pageNumber), Number(nPerPage));
         res.send(response);
     } catch(e){
         handleHttp(res, "ERROR_GET_USERS");

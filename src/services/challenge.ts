@@ -4,8 +4,8 @@ import { Challenge } from '../interfaces/challenge.interface';
 import ChallengeModel from "../models/challenge";
 import UserModel from "../models/user";
 
-const get_Challenges = async() => {
-    const responseItem = await ChallengeModel.find({}).limit(10);
+const get_Challenges = async(pageNumber: number, nPerPage: number) => {
+    const responseItem = await ChallengeModel.find({}).limit(nPerPage).skip((pageNumber - 1)*nPerPage);
     return responseItem;
 };
 
