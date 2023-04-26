@@ -1,10 +1,11 @@
 import { Router } from "express";
 
-import { getChallenges, getChallenge, getChallengeCount, addChallenge, updateChallenge, acceptChallenge, disableChallenge, deleteChallenge } from "../controllers/challenge";  
+import { getAllChallenges, getChallenges, getChallenge, getChallengeCount, addChallenge, updateChallenge, acceptChallenge, disableChallenge, deleteChallenge } from "../controllers/challenge";  
 
 const router = Router();
 
-router.get("/get/all", getChallenges); //Get all challenges
+router.get("/get/all", getAllChallenges); //Get all challenges
+router.get("/get/pagination/:pageNumber/:nPerPage", getChallenges); //Get some challenges
 router.get("/get/:idChallenge", getChallenge); //Get only the information of one challenge
 
 router.get("/count", getChallengeCount); //Return the total number of active challenges

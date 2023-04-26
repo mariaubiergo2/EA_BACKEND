@@ -4,6 +4,11 @@ import { User } from '../interfaces/user.interface';
 import UserModel from "../models/user";
 import ChallengeModel from "../models/user";
 
+const get_AllUsers = async() => {
+    const responseItem = await UserModel.find({});
+    return responseItem;
+};
+
 const get_Users = async(pageNumber: number, nPerPage: number) => {
     const responseItem = await UserModel.find({}).limit(nPerPage).skip((pageNumber - 1)*nPerPage);
     return responseItem;
@@ -88,5 +93,5 @@ const delete_User = async(idUser: string) => {
     return responseItem;
 };
 
-export { get_Users, get_User, get_UserCount, get_UsersProfile, get_UserProfile, log_in, 
+export { get_AllUsers, get_Users, get_User, get_UserCount, get_UsersProfile, get_UserProfile, log_in, 
     sign_up, update_User, add_Follow, delete_Follow, add_Challenge, disable_User, delete_User };
