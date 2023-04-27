@@ -4,7 +4,7 @@ import { getAllUsers, getUsers, getUser, getUserCount, getUsersProfile, getUserP
 
 const router = Router();
 
-//router.get("/get/all",checkAdmin ,getUsers); //Get all users
+//router.get("/get/all", checkAdmin, getAllUsers); //Get all users
 //router.get("/get/:idUser", checkAdmin, getUser); //Get only the information of one user
 
 router.get("/get/all", getAllUsers); //Get all users
