@@ -2,7 +2,7 @@ import { Request,Response } from "express";
 
 import { handleHttp } from "../utils/error.handle";
 import { get_Users, get_User, get_UserCount, get_UsersProfile, get_UserProfile, log_in, 
-    sign_up, update_User, add_Follow, delete_Follow, add_Challenge, disable_User, delete_User } from "../services/user";
+    sign_up, update_User, add_Follow, delete_Follow, add_Challenge, disable_User, delete_User, unable_User } from "../services/user";
 
 const getUsers = async(req:Request, res:Response) => {
     try{
@@ -122,6 +122,16 @@ const disableUser = async ({params}:Request, res:Response) => {
     }
 };
 
+const unableUser = async ({params}:Request, res:Response) => {
+    try{
+        const {idUser} = params;
+        const response = await unable_User(idUser);
+        res.send(response);
+    } catch(e){
+        handleHttp(res, "ERROR_UNABLE_USER");
+    }
+};
+
 const deleteUser = async ({params}:Request, res:Response) => {
     try{
         const {idUser} = params;
@@ -133,4 +143,4 @@ const deleteUser = async ({params}:Request, res:Response) => {
 };
 
 export{ getUsers, getUser, getUserCount, getUsersProfile, getUserProfile, login, 
-    signup, updateUser, addFollow, deleteFollow, addChallenge, disableUser, deleteUser };
+    signup, updateUser, addFollow, deleteFollow, addChallenge, disableUser, deleteUser, unableUser };
