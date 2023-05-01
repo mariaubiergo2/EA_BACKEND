@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { checkAdmin } from "../middleware/session";
 import { getAllUsers, getUsers, getUser, getUserCount, getUsersProfile, getUserProfile, login, signup, updateUser, addFollow, deleteFollow, addChallenge, disableUser, deleteUser } from "../controllers/user";
+import { loginCtrl, tokenCtrl } from "../controllers/auth";
 
 const router = Router();
 
@@ -18,6 +19,8 @@ router.get("/profile/:idUser", getUserProfile); //Get only the information of on
 
 router.get("/login/:email/:password", login); //Lets a user to log in
 router.post("/signup", signup); //Lets a user to register a new account
+router.post("/login2", loginCtrl);
+router.post("/token", tokenCtrl);
 
 router.post("/update/:idUser", updateUser); //Lets a user to update his or her account details
 
