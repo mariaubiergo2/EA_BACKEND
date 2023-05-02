@@ -4,8 +4,13 @@ import { Challenge } from '../interfaces/challenge.interface';
 import ChallengeModel from "../models/challenge";
 import UserModel from "../models/user";
 
-const get_Challenges = async() => {
-    const responseItem = await ChallengeModel.find({}).limit(10);
+const get_AllChallenges = async() => {
+    const responseItem = await ChallengeModel.find({});
+    return responseItem;
+};
+
+const get_Challenges = async(pageNumber: number, nPerPage: number) => {
+    const responseItem = await ChallengeModel.find({}).limit(nPerPage).skip((pageNumber - 1)*nPerPage);
     return responseItem;
 };
 
@@ -48,5 +53,5 @@ const delete_Challenge = async (idChallenge: string) => {
     return responseItem;
 };
 
-export{ get_Challenges, get_Challenge, get_ChallengeCount, add_Challenge, 
+export{ get_AllChallenges, get_Challenges, get_Challenge, get_ChallengeCount, add_Challenge, 
     update_Challenge, accept_Challenge, disable_Challenge, delete_Challenge };

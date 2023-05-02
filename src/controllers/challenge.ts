@@ -1,12 +1,22 @@
 import { Request, Response } from "express";
 
 import { handleHttp } from "../utils/error.handle";
-import { get_Challenges, get_Challenge, get_ChallengeCount, add_Challenge, update_Challenge, 
+import { get_AllChallenges, get_Challenges, get_Challenge, get_ChallengeCount, add_Challenge, update_Challenge, 
     accept_Challenge, disable_Challenge, delete_Challenge } from "../services/challenge"; 
 
-const getChallenges = async (req:Request, res:Response) => {
+const getAllChallenges = async (req:Request, res:Response) => {
     try{
-        const response = await get_Challenges();
+        const response = await get_AllChallenges();
+        res.send(response);
+    } catch(e){
+        handleHttp(res, "ERROR_GET_ALL_CHALLENGES");
+    }
+};
+
+const getChallenges = async ({params}:Request, res:Response) => {
+    try{
+        const {pageNumber, nPerPage} = params;
+        const response = await get_Challenges(Number(pageNumber), Number(nPerPage));
         res.send(response);
     } catch(e){
         handleHttp(res, "ERROR_GET_CHALLENGES");
@@ -82,5 +92,5 @@ const deleteChallenge = async ({params}:Request, res:Response) => {
     }
 };
 
-export{ getChallenges, getChallenge, getChallengeCount, addChallenge, updateChallenge, 
+export{ getAllChallenges, getChallenges, getChallenge, getChallengeCount, addChallenge, updateChallenge, 
     acceptChallenge, disableChallenge, deleteChallenge };
