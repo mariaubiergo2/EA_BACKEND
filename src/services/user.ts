@@ -88,10 +88,18 @@ const disable_User = async(idUser: string) => {
     return responseItem;
 };
 
+const unable_User = async(idUser: string) => {
+    const responseItem = await UserModel.findByIdAndUpdate({_id: idUser}, 
+        {active: true}, {new: true});
+    return responseItem;
+};
+
 const delete_User = async(idUser: string) => {
     const responseItem = await UserModel.findByIdAndRemove({_id: idUser});
     return responseItem;
 };
 
+
 export { get_AllUsers, get_Users, get_User, get_UserCount, get_UsersProfile, get_UserProfile, log_in, 
-    sign_up, update_User, add_Follow, delete_Follow, add_Challenge, disable_User, delete_User };
+    sign_up, update_User, add_Follow, delete_Follow, add_Challenge, disable_User, delete_User, unable_User };
+
