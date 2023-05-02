@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { checkAdmin } from "../middleware/session";
 
-import { getAllUsers, getUsers, getUser, getUserCount, getUsersProfile, getUserProfile, login, signup, updateUser, addFollow, deleteFollow, addChallenge, disableUser, deleteUser } from "../controllers/user";
+import { getAllUsers, getUsers, getUser, getUserCount, getUsersProfile, getUserProfile, login, signup, updateUser, addFollow, deleteFollow, addChallenge, disableUser, deleteUser, unableUser } from "../controllers/user";
 import { loginCtrl, tokenCtrl } from "../controllers/auth";
 
 const router = Router();

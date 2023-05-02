@@ -2,7 +2,7 @@ import { Request,Response } from "express";
 
 import { handleHttp } from "../utils/error.handle";
 
-import { get_AllUsers, get_User, get_UserCount, get_UsersProfile, get_UserProfile, log_in, 
+import { get_AllUsers, get_User, get_Users, get_UserCount, get_UsersProfile, get_UserProfile, log_in, 
     sign_up, update_User, add_Follow, delete_Follow, add_Challenge, disable_User, delete_User, unable_User } from "../services/user";
 
 const getAllUsers = async(req:Request, res:Response) => {
@@ -154,5 +154,5 @@ const deleteUser = async ({params}:Request, res:Response) => {
     }
 };
 
-export{ geAlltUsers, getUser, getUserCount, getUsersProfile, getUserProfile, login, 
+export{ getAllUsers, getUser, getUsers, getUserCount, getUsersProfile, getUserProfile, login, 
     signup, updateUser, addFollow, deleteFollow, addChallenge, disableUser, deleteUser, unableUser };
