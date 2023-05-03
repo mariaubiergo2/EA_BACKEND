@@ -44,6 +44,9 @@ const log_in = async(email: string, password: string) => {
 };
 
 const sign_up = async(item: User) => {
+    const user = await UserModel.findOne({email: item.email})
+    if (user!=null)
+        return "ALREADY_USED_EMAIL";
     if(!item.role) { item.role = "user"; } //If role is not specified then role = "user";
     item.active = true;
     const responseItem = await UserModel.create(item);

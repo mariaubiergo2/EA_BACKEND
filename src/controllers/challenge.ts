@@ -46,7 +46,13 @@ const getChallengeCount = async (req:Request, res:Response) => {
 const addChallenge = async ({body}:Request, res:Response) => {
     try{
         const response = await add_Challenge(body);
-        res.send(response);
+        if (response===("ALREADY_USED_NAME")){
+            res.status(400);
+            res.send(response)
+        }
+        else {
+            res.send(response);
+        }
     }catch(e){
         handleHttp(res,"ERROR_POST_CHALLENGE");
     }

@@ -1,7 +1,5 @@
-import { Request,Response } from "express";
-
+import { Request, Response } from "express";
 import { handleHttp } from "../utils/error.handle";
-
 import { get_AllUsers, get_User, get_Users, get_UserCount, get_UsersProfile, get_UserProfile, log_in, 
     sign_up, update_User, add_Follow, delete_Follow, add_Challenge, disable_User, delete_User, unable_User } from "../services/user";
 
@@ -78,7 +76,13 @@ const login = async({params}:Request, res:Response) => {
 const signup = async({body}:Request, res:Response) => {
     try{
         const response = await sign_up(body);
-        res.send(response);
+        if (response===("ALREADY_USED_EMAIL")){
+            res.status(400);
+            res.send(response)
+        }
+        else {
+            res.send(response);
+        }        
     }catch(e){
         handleHttp(res, "ERROR_SIGNUP");
     }
