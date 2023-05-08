@@ -42,16 +42,13 @@ const registerNewUser = async ({ name, surname, username, email, password, role,
     const passHash2 = await encrypt(password);
     // var isCorrect: boolean = false;
     const isCorrect = await verified(password, passwordHash);
-    console.log(password);
-    console.log(passHash2);
-    console.log(passwordHash);
     // if (passHash2 === passwordHash)
     //   isCorrect = true;
     // if (isCorrect === false) return "PASSWORD_INCORRECT";
     if (!isCorrect) return "PASSWORD_INCORRECT";
 
     //const token = generateToken(checkIs.email, checkIs.role);
-    const token = generateTokenCompleted(checkIs.id, checkIs.name, checkIs.surname, checkIs.username);
+    const token = generateTokenCompleted(checkIs.id, checkIs.name, checkIs.surname, checkIs.username, checkIs.role);
     const data = {token};
     return data;
   };
