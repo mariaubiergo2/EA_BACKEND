@@ -12,7 +12,9 @@ const registerNewUser = async ({ name, surname, username, email, password, role,
     if (role==null)
       role= "user";
     const active = true;
-    const registerNewUser = await UserModel.create({email, password, name, surname, role, exp, username, level, active});
+    const passHash = await encrypt(password);
+    const registerNewUser = await UserModel.create({email, password: passHash, name, surname, role, exp, username, level, active});
+    console.log(password);
     return registerNewUser;
   };
 
@@ -34,10 +36,18 @@ const registerNewUser = async ({ name, surname, username, email, password, role,
     const checkIs = await UserModel.findOne({ email });
     if (!checkIs) return "NOT_FOUND_USER";
 
-    if (!checkIs.active) return "NOT_ACTIVE_USER";
+    if (checkIs.active === false) return "NOT_ACTIVE_USER";
   
-    const passwordHash = checkIs.password; 
+    const passwordHash = checkIs.password;     
+    const passHash2 = await encrypt(password);
+    // var isCorrect: boolean = false;
     const isCorrect = await verified(password, passwordHash);
+    console.log(password);
+    console.log(passHash2);
+    console.log(passwordHash);
+    // if (passHash2 === passwordHash)
+    //   isCorrect = true;
+    // if (isCorrect === false) return "PASSWORD_INCORRECT";
     if (!isCorrect) return "PASSWORD_INCORRECT";
 
     //const token = generateToken(checkIs.email, checkIs.role);
