@@ -108,8 +108,12 @@ const get_user_friends = async (idUser: string, data: User) => {
         data,
         {
             new:true
-        },
-        ).populate('followers');
+        },).populate('followers');
+    if (responseItem?.followers?.length!=0 && responseItem!=null)
+    {
+        const responseItem2 = responseItem.followers
+        return responseItem2;
+    }
         return responseItem;
 };
 
