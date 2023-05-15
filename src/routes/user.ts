@@ -2,7 +2,7 @@ import { Router } from "express";
 import { checkJwt,checkAdmin } from "../middleware/session";
 import {registerCtrl, tokenCtrl} from "../controllers/auth"
 
-import { getAllUsers, getUsers, getUser, getUserCount, getUsersProfile, getUserProfile, login, signup, updateUser, addFollow, deleteFollow, addChallenge, disableUser, deleteUser, unableUser } from "../controllers/user";
+import { getAllUsers, getUsers, getUser, getUserCount, getUsersProfile, getUserProfile, login, signup, updateUser, addFollow, deleteFollow, addChallenge, disableUser, deleteUser, unableUser, getUserFriends } from "../controllers/user";
 
 const router = Router();
 
@@ -25,7 +25,7 @@ router.post("/token",checkJwt, tokenCtrl); //PER FER EL LOGIN
 
 router.post("/update/:idUser",checkJwt, updateUser); //Lets a user to update his or her account details
 
-router.post("/follow/add/:idUser/:idFollowed",checkJwt, addFollow); //Add a user to your following list
+router.post("/follow/add/:idUser/:idFollowed", addFollow); //Add a user to your following list
 router.post("/follow/delete/:idUser/:idFollowed",checkJwt, deleteFollow); //Remove a user from your following list
 
 router.post("/challenges/add/:idUser/:idChallenge",checkJwt, addChallenge); //Adds a challenge to the list of completed challenges that a user has
@@ -38,5 +38,8 @@ router.post("/unable/:idUser", checkJwt,unableUser); //Disable a user so that he
 router.delete("/delete/:idUser",checkJwt, deleteUser); //Remove a user permanently
 
 //router.delete("/delete/:idUser", checkAdmin, deleteUser); //Remove a user permanently
+
+
+router.get("/friends/:idUser", getUserFriends);
 
 export { router };

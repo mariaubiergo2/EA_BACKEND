@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { handleHttp } from "../utils/error.handle";
-import { get_AllUsers, get_User, get_Users, get_UserCount, get_UsersProfile, get_UserProfile, log_in, 
-    sign_up, update_User, add_Follow, delete_Follow, add_Challenge, disable_User, delete_User, unable_User } from "../services/user";
+import { get_AllUsers, get_User, get_Users, get_UserCount, get_UsersProfile, get_UserProfile, log_in,
+    sign_up, update_User, add_Follow, delete_Follow, add_Challenge, disable_User, delete_User, unable_User, get_user_friends } from "../services/user";
 
 const getAllUsers = async(req:Request, res:Response) => {
     try{
@@ -82,7 +82,7 @@ const signup = async({body}:Request, res:Response) => {
         }
         else {
             res.send(response);
-        }        
+        }
     }catch(e){
         handleHttp(res, "ERROR_SIGNUP");
     }
@@ -158,5 +158,15 @@ const deleteUser = async ({params}:Request, res:Response) => {
     }
 };
 
-export{ getAllUsers, getUser, getUsers, getUserCount, getUsersProfile, getUserProfile, login, 
-    signup, updateUser, addFollow, deleteFollow, addChallenge, disableUser, deleteUser, unableUser };
+const getUserFriends = async ({params, body}:Request, res:Response) => {
+    try{
+        const {idUser} = params;
+        const response = await get_user_friends(idUser, body);
+        res.send(response)
+    } catch(e){
+        handleHttp(res, "ERROR_GET_FRIENDS")
+    }
+}
+
+export{ getAllUsers, getUser, getUsers, getUserCount, getUsersProfile, getUserProfile, login,
+    signup, updateUser, addFollow, deleteFollow, addChallenge, disableUser, deleteUser, unableUser, getUserFriends };
