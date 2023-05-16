@@ -10,6 +10,13 @@ const generateToken = (email: string, role: string) => {
   return jwt;
 };
 
+const generateTokenCompleted = (idUser: string, name: string, surname: string, username: string, role:string) => {
+  const jwt = sign({ idUser, name, surname, username, role }, JWT_SECRET, {
+    expiresIn: "2h",
+  });
+  return jwt;
+};
+
 //Verificamos la firma del token que nos llega como parametro
 const verifyToken = (jwt: string) => {
   try {
@@ -20,4 +27,4 @@ const verifyToken = (jwt: string) => {
   }
 };
 
-export { generateToken, verifyToken };
+export { generateToken, verifyToken, generateTokenCompleted };

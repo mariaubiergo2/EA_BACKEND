@@ -7,13 +7,14 @@ import UserModel from "../models/user";
 const checkJwt = (req: RequestExt, res: Response, next: NextFunction) => {
   try {
     const jwtByUser = req.headers.authorization || "";
-    const jwt = jwtByUser.split(" ").pop(); // 11111
-    const isUser = verifyToken(`${jwt}`) as { email: string };
+    const jwt = jwtByUser.split(" ").pop(); // Bearer: 11111
+    const isUser = verifyToken(`${jwt}`) as { username: string, role: string };
     if (!isUser) {
       res.status(401);
       res.send("NO_TIENES_UN_JWT_VALIDO");
     } else {
       req.user = isUser;
+      console.log(`User ${isUser.username} token OK, rol ${isUser.role}`);
       next();
     }
   } catch (e) {

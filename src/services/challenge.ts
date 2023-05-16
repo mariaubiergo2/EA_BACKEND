@@ -25,12 +25,18 @@ const get_ChallengeCount = async() => {
 };
 
 const add_Challenge = async (item: Challenge) => {
+    const chall = await ChallengeModel.findOne({name: item.name})
+    if (chall!=null)
+        return "ALREADY_USED_NAME";
     item.active = true;
     const responseInsert = await ChallengeModel.create(item);
     return responseInsert;
 };
 
 const update_Challenge = async (idChallenge: string, data: Challenge) => {
+    const chall = await ChallengeModel.findOne({name: data.name})
+    if (chall!=null)
+        return "ALREADY_USED_NAME";
     const responseItem = await ChallengeModel.findByIdAndUpdate({_id: idChallenge}, data, {new: true}); 
     return responseItem;
 };
