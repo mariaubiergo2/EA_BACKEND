@@ -105,17 +105,21 @@ const delete_User = async(idUser: string) => {
 const get_user_friends = async (idUser: string, data: User) => {
     const responseItem = await UserModel.findById(
         {_id: idUser},
-        data,
-        {
-            new:true
-        },).populate('followers');
+        //data,
+        //{
+          //  new:true
+        //},
+        ).populate({
+            path: "followers",
+            select: "name surname username",
+        })//.map
     if (responseItem?.followers?.length!=0 && responseItem!=null)
     {
-        const responseItem2 = responseItem.followers
-        return responseItem2;
+        return responseItem.followers;
     }
         return responseItem;
 };
+
 
 
 export { get_AllUsers, get_Users, get_User, get_UserCount, get_UsersProfile, get_UserProfile, log_in,
