@@ -102,7 +102,8 @@ const addFollow = async ({params}:Request, res:Response) => {
     try{
         const {idUser, idFollowed} = params;
         if (idUser===idFollowed){
-           
+            res.status(400);
+            res.send("ERROR_SAME_USER");
         }
         const response = await add_Follow(idUser, idFollowed);
         res.send(response);
