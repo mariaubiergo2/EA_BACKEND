@@ -105,14 +105,10 @@ const delete_User = async(idUser: string) => {
 const get_user_friends = async (idUser: string, data: User) => {
     const responseItem = await UserModel.findById(
         {_id: idUser},
-        //data,
-        //{
-          //  new:true
-        //},
         ).populate({
             path: "followers",
             select: "name surname username",
-        })//.map
+        })
     if (responseItem?.followers?.length!=0 && responseItem!=null)
     {
         return responseItem.followers;
@@ -121,7 +117,23 @@ const get_user_friends = async (idUser: string, data: User) => {
 };
 
 
+const get_users_not_following = async (idUser: string, data: User) => {
+    const user = await UserModel.findById(idUser);
+    if (user){
+        const usersNotFollowing = await UserModel.find({
+        _id: { $ne: idUser }, // Exclude the target user
+        following: { $nin: user.followers }
+        });
+        return usersNotFollowing; 
+    }
+    else {
+        return null;
+    }
+       
+};
+
+
 
 export { get_AllUsers, get_Users, get_User, get_UserCount, get_UsersProfile, get_UserProfile, log_in,
-    sign_up, update_User, add_Follow, delete_Follow, add_Challenge, disable_User, delete_User, unable_User, get_user_friends };
+    sign_up, update_User, add_Follow, delete_Follow, add_Challenge, disable_User, delete_User, unable_User, get_user_friends, get_users_not_following };
 
