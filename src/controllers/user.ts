@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import { handleHttp } from "../utils/error.handle";
 import { get_AllUsers, get_User, get_Users, get_UserCount, get_UsersProfile, get_UserProfile, log_in,
-    sign_up, update_User, add_Follow, delete_Follow, add_Challenge, disable_User, delete_User, unable_User, get_user_friends, get_users_not_following } from "../services/user";
+    sign_up, update_User, add_Follow, delete_Follow, add_Challenge, disable_User, delete_User, unable_User,
+     get_user_friends, get_users_not_following, get_user_friends_count, get_users_not_following_count } from "../services/user";
 
 const getAllUsers = async(req:Request, res:Response) => {
     try{
@@ -172,6 +173,16 @@ const getUserFriends = async ({params, body}:Request, res:Response) => {
     }
 }
 
+const getUserFriendsCount = async ({params, body}:Request, res:Response) => {
+    try{
+        const {idUser} = params;
+        const response = await get_user_friends_count(idUser, body);
+        res.send(response?.toString())
+    } catch(e){
+        handleHttp(res, "ERROR_GET_FRIENDS")
+    }
+}
+
 const getUsersNotFollowing = async ({params, body}:Request, res:Response) => {
     try{
         const {idUser} = params;
@@ -182,5 +193,16 @@ const getUsersNotFollowing = async ({params, body}:Request, res:Response) => {
     }
 }
 
+const getUsersNotFollowingCount = async ({params, body}:Request, res:Response) => {
+    try{
+        const {idUser} = params;
+        const response = await get_users_not_following_count(idUser, body);
+        res.send(response.toString())
+    } catch(e){
+        handleHttp(res, "ERROR_GET_NOT_FRIENDS")
+    }
+}
+
 export{ getAllUsers, getUser, getUsers, getUserCount, getUsersProfile, getUserProfile, login,
-    signup, updateUser, addFollow, deleteFollow, addChallenge, disableUser, deleteUser, unableUser, getUserFriends, getUsersNotFollowing };
+    signup, updateUser, addFollow, deleteFollow, addChallenge, disableUser, deleteUser, unableUser,
+    getUserFriendsCount, getUsersNotFollowingCount, getUserFriends, getUsersNotFollowing };

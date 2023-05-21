@@ -116,24 +116,50 @@ const get_user_friends = async (idUser: string, data: User) => {
         return responseItem;
 };
 
+const get_user_friends_count = async (idUser: string, data: User) => {
+    const responseItem = await UserModel.findById(
+        {_id: idUser},
+        ).populate({
+            path: "followers",
+            select: "name surname username",
+        })
+    if (responseItem?.followers?.length!=0 && responseItem!=null)
+    {
+        return responseItem.followers?.length;
+    }
+        return 0;
+};
+
 
 const get_users_not_following = async (idUser: string, data: User) => {
     const user = await UserModel.findById(idUser);
     if (user){
         const usersNotFollowing = await UserModel.find({
-        _id: { $ne: idUser }, // Exclude the target user
-        following: { $nin: user.followers }
+        _id: { $ne: idUser, $nin: user.following }
         });
         return usersNotFollowing; 
     }
     else {
         return null;
+    }   
+};
+
+const get_users_not_following_count = async (idUser: string, data: User) => {
+    const user = await UserModel.findById(idUser);
+    if (user){
+        const usersNotFollowing = await UserModel.find({
+        _id: { $ne: idUser, $nin: user.following }
+        });
+        return usersNotFollowing.length; 
     }
-       
+    else {
+        return 0;
+    }   
 };
 
 
 
 export { get_AllUsers, get_Users, get_User, get_UserCount, get_UsersProfile, get_UserProfile, log_in,
-    sign_up, update_User, add_Follow, delete_Follow, add_Challenge, disable_User, delete_User, unable_User, get_user_friends, get_users_not_following };
+    sign_up, update_User, add_Follow, delete_Follow, add_Challenge, disable_User, delete_User, 
+    unable_User, get_user_friends, get_users_not_following, get_user_friends_count, get_users_not_following_count };
 
