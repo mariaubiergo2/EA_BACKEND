@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { handleHttp } from "../utils/error.handle";
 import { get_AllUsers, get_User, get_Users, get_UserCount, get_UsersProfile, get_UserProfile, log_in,
     sign_up, update_User, add_Follow, delete_Follow, add_Challenge, disable_User, delete_User, unable_User,
-     get_user_friends, get_users_not_following, get_user_friends_count, get_users_not_following_count } from "../services/user";
+     get_following, get_not_following, get_following_count, get_followers_count, get_not_following_count, get_followers } from "../services/user";
 
 const getAllUsers = async(req:Request, res:Response) => {
     try{
@@ -163,40 +163,60 @@ const deleteUser = async ({params}:Request, res:Response) => {
     }
 };
 
-const getUserFriends = async ({params, body}:Request, res:Response) => {
+const getFollowing = async ({params, body}:Request, res:Response) => {
     try{
         const {idUser} = params;
-        const response = await get_user_friends(idUser, body);
+        const response = await get_following(idUser, body);
         res.send(response)
     } catch(e){
         handleHttp(res, "ERROR_GET_FRIENDS")
     }
 }
 
-const getUserFriendsCount = async ({params, body}:Request, res:Response) => {
+const getFollowingCount = async ({params, body}:Request, res:Response) => {
     try{
         const {idUser} = params;
-        const response = await get_user_friends_count(idUser, body);
+        const response = await get_following_count(idUser, body);
         res.send(response?.toString())
     } catch(e){
         handleHttp(res, "ERROR_GET_FRIENDS")
     }
 }
 
-const getUsersNotFollowing = async ({params, body}:Request, res:Response) => {
+const getFollowers = async ({params, body}:Request, res:Response) => {
     try{
         const {idUser} = params;
-        const response = await get_users_not_following(idUser, body);
+        const response = await get_followers(idUser, body);
         res.send(response)
     } catch(e){
         handleHttp(res, "ERROR_GET_NOT_FRIENDS")
     }
 }
 
-const getUsersNotFollowingCount = async ({params, body}:Request, res:Response) => {
+const getFollowersCount = async ({params, body}:Request, res:Response) => {
     try{
         const {idUser} = params;
-        const response = await get_users_not_following_count(idUser, body);
+        const response = await get_followers_count(idUser, body);
+        res.send(response?.toString())
+    } catch(e){
+        handleHttp(res, "ERROR_GET_FRIENDS")
+    }
+}
+
+const getNotFollowing = async ({params, body}:Request, res:Response) => {
+    try{
+        const {idUser} = params;
+        const response = await get_not_following(idUser, body);
+        res.send(response)
+    } catch(e){
+        handleHttp(res, "ERROR_GET_NOT_FRIENDS")
+    }
+}
+
+const getNotFollowingCount = async ({params, body}:Request, res:Response) => {
+    try{
+        const {idUser} = params;
+        const response = await get_not_following_count(idUser, body);
         res.send(response.toString())
     } catch(e){
         handleHttp(res, "ERROR_GET_NOT_FRIENDS")
@@ -205,4 +225,4 @@ const getUsersNotFollowingCount = async ({params, body}:Request, res:Response) =
 
 export{ getAllUsers, getUser, getUsers, getUserCount, getUsersProfile, getUserProfile, login,
     signup, updateUser, addFollow, deleteFollow, addChallenge, disableUser, deleteUser, unableUser,
-    getUserFriendsCount, getUsersNotFollowingCount, getUserFriends, getUsersNotFollowing };
+    getFollowersCount, getNotFollowingCount, getFollowingCount, getFollowing, getNotFollowing, getFollowers };

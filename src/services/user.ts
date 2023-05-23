@@ -102,12 +102,40 @@ const delete_User = async(idUser: string) => {
     return responseItem;
 };
 
-const get_user_friends = async (idUser: string, data: User) => {
+const get_following = async (idUser: string, data: User) => {
+    const responseItem = await UserModel.findById(
+        {_id: idUser},
+        ).populate({
+            path: "following",
+            select: "name surname username level",
+        })
+    if (responseItem?.following?.length!=0 && responseItem!=null)
+    {
+        return responseItem.following;
+    }
+        return responseItem;
+};
+
+const get_following_count = async (idUser: string, data: User) => {
+    const responseItem = await UserModel.findById(
+        {_id: idUser},
+        ).populate({
+            path: "following",
+            select: "name surname username",
+        })
+    if (responseItem?.following?.length!=0 && responseItem!=null)
+    {
+        return responseItem.following?.length;
+    }
+        return 0;
+};
+
+const get_followers = async (idUser: string, data: User) => {
     const responseItem = await UserModel.findById(
         {_id: idUser},
         ).populate({
             path: "followers",
-            select: "name surname username",
+            select: "name surname username level",
         })
     if (responseItem?.followers?.length!=0 && responseItem!=null)
     {
@@ -116,7 +144,7 @@ const get_user_friends = async (idUser: string, data: User) => {
         return responseItem;
 };
 
-const get_user_friends_count = async (idUser: string, data: User) => {
+const get_followers_count = async (idUser: string, data: User) => {
     const responseItem = await UserModel.findById(
         {_id: idUser},
         ).populate({
@@ -130,8 +158,7 @@ const get_user_friends_count = async (idUser: string, data: User) => {
         return 0;
 };
 
-
-const get_users_not_following = async (idUser: string, data: User) => {
+const get_not_following = async (idUser: string, data: User) => {
     const user = await UserModel.findById(idUser);
     if (user){
         const usersNotFollowing = await UserModel.find({
@@ -144,7 +171,7 @@ const get_users_not_following = async (idUser: string, data: User) => {
     }   
 };
 
-const get_users_not_following_count = async (idUser: string, data: User) => {
+const get_not_following_count = async (idUser: string, data: User) => {
     const user = await UserModel.findById(idUser);
     if (user){
         const usersNotFollowing = await UserModel.find({
@@ -161,5 +188,6 @@ const get_users_not_following_count = async (idUser: string, data: User) => {
 
 export { get_AllUsers, get_Users, get_User, get_UserCount, get_UsersProfile, get_UserProfile, log_in,
     sign_up, update_User, add_Follow, delete_Follow, add_Challenge, disable_User, delete_User, 
-    unable_User, get_user_friends, get_users_not_following, get_user_friends_count, get_users_not_following_count };
+    unable_User, get_following, get_not_following, get_following_count, get_followers_count, 
+    get_not_following_count, get_followers };
 

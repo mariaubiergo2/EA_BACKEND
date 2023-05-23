@@ -3,8 +3,8 @@ import { checkJwt,checkAdmin } from "../middleware/session";
 import {registerCtrl, tokenCtrl} from "../controllers/auth"
 
 import { getAllUsers, getUsers, getUser, getUserCount, getUsersProfile, getUserProfile, updateUser,
-     addFollow, deleteFollow, addChallenge, disableUser, deleteUser, unableUser, getUserFriends, 
-     getUsersNotFollowing, getUserFriendsCount, getUsersNotFollowingCount } from "../controllers/user";
+     addFollow, deleteFollow, addChallenge, disableUser, deleteUser, unableUser, getFollowing, 
+     getNotFollowing, getFollowersCount, getNotFollowingCount, getFollowingCount, getFollowers } from "../controllers/user";
 
 const router = Router();
 
@@ -26,10 +26,15 @@ router.post("/update/:idUser",checkJwt, updateUser); //Lets a user to update his
 
 router.post("/follow/add/:idUser/:idFollowed", addFollow); //Add a user to your following list
 router.post("/follow/delete/:idUser/:idFollowed",checkJwt, deleteFollow); //Remove a user from your following list
-router.get("/friends/:idUser", getUserFriends);
-router.get("/friends/unfollowing/:idUser", getUsersNotFollowing);
-router.get("/friends/count/:idUser", getUserFriendsCount);
-router.get("/friends/unfollowing/count/:idUser", getUsersNotFollowingCount);
+
+router.get("/following/:idUser", getFollowing); //gets the ones that is following
+router.get("/friends/unfollowing/:idUser", getNotFollowing);
+router.get("/followers/:idUser", getFollowers);
+
+router.get("/followers/count/:idUser", getFollowersCount);
+router.get("/following/count/:idUser", getFollowingCount);
+
+router.get("/friends/unfollowing/count/:idUser", getNotFollowingCount);
 
 router.post("/challenges/add/:idUser/:idChallenge",checkJwt, addChallenge); //Adds a challenge to the list of completed challenges that a user has
 
