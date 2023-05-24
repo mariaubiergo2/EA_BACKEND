@@ -48,7 +48,8 @@ const registerNewUser = async ({ name, surname, username, email, password, role,
     if (!isCorrect) return "PASSWORD_INCORRECT";
 
     //const token = generateToken(checkIs.email, checkIs.role);
-    const token = generateTokenCompleted(checkIs.id, checkIs.name, checkIs.surname, checkIs.username, checkIs.role);
+    const token = generateTokenCompleted(checkIs.id, checkIs.name, checkIs.surname,
+      checkIs.username, checkIs.role, checkIs.level);
     const data = {token};
     return data;
   };
