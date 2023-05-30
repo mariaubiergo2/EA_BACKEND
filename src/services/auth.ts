@@ -38,7 +38,8 @@ const registerNewUser = async ({ name, surname, username, email, password, role,
 
     if (checkIs.active === false) return "NOT_ACTIVE_USER";
   
-    const passwordHash = checkIs.password;     
+    const passwordHash = checkIs.password;
+    console.log("Pass con hash: " + passwordHash);     
     const passHash2 = await encrypt(password);
     // var isCorrect: boolean = false;
     const isCorrect = await verified(password, passwordHash);
@@ -54,4 +55,22 @@ const registerNewUser = async ({ name, surname, username, email, password, role,
     return data;
   };
 
-export {registerNewUser, tokenUser};
+  const tokenGoogle = async ({ email, password }: Auth) => {
+    const checkIs = await UserModel.findOne({ email });
+    if (!checkIs) return "NOT_FOUND_USER";
+
+    if (checkIs.active === false) return "NOT_ACTIVE_USER";
+  
+    const passwordHash = checkIs.password;
+    console.log("Pass con hash: " + passwordHash);     
+    const isCorrect = await verified(password, passwordHash);
+    if (!isCorrect) return "PASSWORD_INCORRECT";
+
+    //const token = generateToken(checkIs.email, checkIs.role);
+    const token = generateTokenCompleted(checkIs.id, checkIs.name, checkIs.surname,
+      checkIs.username, checkIs.role, checkIs.level);
+    const data = {token};
+    return data;
+  };
+
+export {registerNewUser, tokenUser, tokenGoogle};

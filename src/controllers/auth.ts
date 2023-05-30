@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { registerNewUser, tokenUser } from "../services/auth";
+import { registerNewUser, tokenGoogle, tokenUser } from "../services/auth";
 import { handleHttp } from "../utils/error.handle";
 
 const registerCtrl = async ({ body }: Request, res: Response) => {
@@ -20,6 +20,27 @@ const registerCtrl = async ({ body }: Request, res: Response) => {
 
 };
 
+const googleControl = async ({ body }: Request, res: Response) => {
+  try{
+    const response = await registerNewUser(body);
+    if (response===("ALREADY_USER")){
+      const { email, password } = body;
+      const responseUser = await tokenGoogle({ email, password });
+      res.status(200);
+      res.send(responseUser);
+      console.log("Google User already exists, ");
+    }
+    else {
+        res.send(response);
+    }        
+}catch(e){
+    handleHttp(res, "ERROR_GOGLE_SIGNUP");
+    console.log("Error GOOGLE Signup");
+}
+
+};
+
+
 // const loginCtrl = async ({ body }: Request, res: Response) => {
   
 //   const { email, password } = body;
@@ -37,6 +58,7 @@ const tokenCtrl = async ({ body }: Request, res: Response) => {
   
   const { email, password } = body;
   const responseUser = await tokenUser({ email, password });
+  console.log("Password del user: " + password);
 
   if (responseUser === "PASSWORD_INCORRECT") {
     res.status(403);
@@ -56,4 +78,4 @@ const tokenCtrl = async ({ body }: Request, res: Response) => {
   }  
 };
 
-export { registerCtrl, tokenCtrl };
+export { registerCtrl, tokenCtrl, googleControl };
