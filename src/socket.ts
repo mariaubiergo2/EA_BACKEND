@@ -18,7 +18,7 @@ const EVENTS = {
 const rooms: Record<string, { name: string }> = {};
 
 function socket({ io }: { io: Server }) {
-    console.log(`Sockets enabled`);
+  console.log(`Sockets enabled`);
 
   io.on(EVENTS.connection, (socket: Socket) => {
     console.log(`User connected ${socket.id}`);
@@ -26,27 +26,34 @@ function socket({ io }: { io: Server }) {
     socket.emit(EVENTS.SERVER.ROOMS, rooms);
 
     /*
-     * When a user creates a new room
+     * Crear Sala y/o Conectarse
      */
-    socket.on(EVENTS.CLIENT.CREATE_ROOM, ( {roomName} ) => {
+    socket.on(EVENTS.CLIENT.CREATE_ROOM, ({ roomName }) => {
       console.log({ roomName });
-      // create a roomId
-      const roomId = nanoid();
-      // add a new room to the rooms object
-      rooms[roomId] = {
-        name: roomName,
-      };
-
-      socket.join(roomId);
-
-      // broadcast an event saying there is a new room
-      socket.broadcast.emit(EVENTS.SERVER.ROOMS, rooms);
-
-      // emit back to the room creator with all the rooms
-      socket.emit(EVENTS.SERVER.ROOMS, rooms);
-      // emit event back the room creator saying they have joined a room
-      socket.emit(EVENTS.SERVER.JOINED_ROOM, roomId);
+    
+      const existingRoom = Object.values(rooms).find((room) => room.name === roomName);
+    
+      if (existingRoom) {
+        const roomId = Object.keys(rooms).find((key) => rooms[key].name === roomName);
+        if (roomId) {
+          socket.join(roomId);
+          socket.emit(EVENTS.SERVER.JOINED_ROOM, roomId);
+          socket.emit(EVENTS.SERVER.ROOMS, rooms); // Emitir las salas al usuario que se ha unido
+        }
+      } else {
+        const roomId = nanoid();
+        rooms[roomId] = {
+          name: roomName,
+        };
+    
+        socket.join(roomId);
+        socket.broadcast.emit(EVENTS.SERVER.ROOMS, rooms);
+        socket.emit(EVENTS.SERVER.ROOMS, rooms);
+        socket.emit(EVENTS.SERVER.JOINED_ROOM, roomId);
+      }
     });
+      
+    
 
     /*
      * When a user sends a room message
