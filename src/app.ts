@@ -37,9 +37,8 @@ app.get("/", (_, res) =>
   res.send(`Server is up and running version ${version}`)
 );
 
-httpServer.listen(port, host, () => {
+httpServer.listen(port, () => {
   console.log("Server version ${version} is listening 🚀");
-  console.log(`http://${host}:${port}`);
 
   socket({ io });
 });
