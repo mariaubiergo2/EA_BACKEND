@@ -56,8 +56,11 @@ const UserSchema = new Schema<User>(
         active: {
             type: Boolean,
             required: false,
-        }
-        
+        },
+        photo: {
+            type: String,
+            required: false,
+        }        
     },
     {
         timestamps: true,

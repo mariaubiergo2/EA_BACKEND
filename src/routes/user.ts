@@ -43,4 +43,8 @@ router.post("/unable/:idUser", checkJwt,unableUser); //Disable a user so that he
 
 router.delete("/delete/:idUser",checkJwt, deleteUser); //Remove a user permanently
 
+// router.post("/profile/photo/add/:idUser/:photo",checkJwt, addPhoto); //Add picture profile to the user
+// router.get("/profile/photo/get/:idUser",checkJwt, getPhoto); //Get the profile photo of the user
+// router.delete("/profile/photo/delete/:idUser",checkJwt, deletePhoto); //Delete the profile picture of the user
+
 export { router };
