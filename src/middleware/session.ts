@@ -14,7 +14,7 @@ const checkJwt = (req: RequestExt, res: Response, next: NextFunction) => {
       res.send("NO_TIENES_UN_JWT_VALIDO");
     } else {
       req.user = isUser;
-      console.log(`User ${isUser.username} token OK, rol ${isUser.role}`);
+      //console.log(`User ${isUser.username} token OK, rol ${isUser.role}`);
       next();
     }
   } catch (e) {
