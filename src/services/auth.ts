@@ -50,7 +50,7 @@ const registerNewUser = async ({ name, surname, username, email, password, role,
 
     //const token = generateToken(checkIs.email, checkIs.role);
     const token = generateTokenCompleted(checkIs.id, checkIs.name, checkIs.surname,
-      checkIs.username, checkIs.role, checkIs.level);
+      checkIs.username, checkIs.role, checkIs.level, checkIs.imageURL);
     const data = {token};
     return data;
   };
@@ -68,7 +68,7 @@ const registerNewUser = async ({ name, surname, username, email, password, role,
 
     //const token = generateToken(checkIs.email, checkIs.role);
     const token = generateTokenCompleted(checkIs.id, checkIs.name, checkIs.surname,
-      checkIs.username, checkIs.role, checkIs.level);
+      checkIs.username, checkIs.role, checkIs.level, checkIs.imageURL);
     const data = {token};
     return data;
   };
