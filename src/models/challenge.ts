@@ -24,6 +24,14 @@ const ChallengeSchema = new Schema<Challenge>(
             type: Number,
             required: true,
         },
+        questions:{
+            type:[String],
+            required:false,
+        },
+        answer: {
+            type: String,
+            required: false,
+        },
         users: {
             type: [Schema.Types.ObjectId],
             ref: 'users',

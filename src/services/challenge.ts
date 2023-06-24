@@ -59,5 +59,18 @@ const delete_Challenge = async (idChallenge: string) => {
     return responseItem;
 };
 
-export{ get_AllChallenges, get_Challenges, get_Challenge, get_ChallengeCount, add_Challenge, 
+const solve_Challenge = async (idChallenge: string, answer: string) => {
+    const chall = await ChallengeModel.findById({_id: idChallenge}); 
+    if(chall!=null){
+        if (answer === chall.answer){
+            console.log(`Answer ${answer} OK del challenge ${chall._id}`);
+            return "ANSWER_OK";
+        }
+        return "ANSWER_NOK";
+    } 
+    return "ANSWER_NOK";
+    
+};
+
+export{ solve_Challenge, get_AllChallenges, get_Challenges, get_Challenge, get_ChallengeCount, add_Challenge, 
     update_Challenge, accept_Challenge, disable_Challenge, delete_Challenge };
