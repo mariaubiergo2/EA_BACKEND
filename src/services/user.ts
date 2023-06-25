@@ -3,6 +3,7 @@ import { Types } from "mongoose";
 import { User } from '../interfaces/user.interface';
 import UserModel from "../models/user";
 import ChallengeModel from "../models/user";
+import { encrypt } from "../utils/bcrypt.handle";
 
 const get_AllUsers = async() => {
     const responseItem = await UserModel.find({});
@@ -54,6 +55,7 @@ const sign_up = async(item: User) => {
 };
 
 const update_User = async(idUser: string, data: User) => {
+    data.password = await encrypt(data.password);
     const responseItem = await UserModel.findByIdAndUpdate({_id: idUser}, data, {new: true});
     return responseItem;
 };
