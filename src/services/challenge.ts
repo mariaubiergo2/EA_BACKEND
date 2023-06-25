@@ -4,7 +4,7 @@ import { add_Challenge as add_ChallengeUser } from "../services/user";
 import { Challenge } from '../interfaces/challenge.interface';
 import ChallengeModel from "../models/challenge";
 import UserModel from "../models/user";
-import { User } from "../interfaces/user.interface";
+import { User } from '../interfaces/user.interface';
 
 const get_AllChallenges = async() => {
     const responseItem = await ChallengeModel.find({});
@@ -83,9 +83,11 @@ const solve_Challenge = async (idChallenge: string, answer: string, idUser: stri
             console.log("Contestacion OK")
             const response = await add_ChallengeUser(idUser, idChallenge);
             console.log(response)
-
+            const user = await UserModel.findById({_id: idUser}); 
+            const answerStatus = "ANSWER_OK";
             console.log(`Answer ${answer} OK del challenge ${chall._id}`);
-            return "ANSWER_OK";
+            
+            return `${answerStatus}/${user?.level}/${user?.exp}`;
         }
         return "ANSWER_NOK";
     } 
