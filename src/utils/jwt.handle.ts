@@ -10,8 +10,8 @@ const generateToken = (email: string, role: string) => {
   return jwt;
 };
 
-const generateTokenCompleted = (idUser: string, name: string, surname: string, username: string, role:string, level:Number, imageURL:string) => {
-  const jwt = sign({ idUser, name, surname, username, role, level, imageURL }, JWT_SECRET, {
+const generateTokenCompleted = (idUser: string, name: string, surname: string, username: string, role:string, level:Number, imageURL:string, experience:Number) => {
+  const jwt = sign({ idUser, name, surname, username, role, level, imageURL, experience }, JWT_SECRET, {
     expiresIn: "2h",
   });
   return jwt;

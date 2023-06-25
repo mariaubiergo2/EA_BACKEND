@@ -2,7 +2,7 @@ import { Types } from "mongoose";
 
 import { User } from '../interfaces/user.interface';
 import UserModel from "../models/user";
-import ChallengeModel from "../models/user";
+import ChallengeModel from "../models/challenge";
 import { encrypt } from "../utils/bcrypt.handle";
 
 const get_AllUsers = async() => {
@@ -87,14 +87,15 @@ const add_Challenge = async(idUser: string, idChallenger: string) => {
     console.log(`El challenge es ${chall}`)
     const awardedExp = chall?.exp;
     console.log(`La awarded exp es ${awardedExp}`)
+    console.log(`La id del user es ${idUser}`)
     const responseItem = await UserModel.findByIdAndUpdate({_id: idUser},
-        {$addToSet: {record: new Types.ObjectId(chall?.id)},$inc: { exp: awardedExp }}, {new: true});
-    console.log(`El responseItem del add_challenge es ${responseItem}`)
+        {$addToSet: {record: new Types.ObjectId(idChallenger)},$inc: { exp: awardedExp }}, {new: true});
+        console.log(`El responseItem del add_challenge es ${responseItem}`)
     if (responseItem && Number(responseItem?.exp) >= 100){
-    responseItem.level = Number(responseItem.level) + 1;
-    responseItem.exp = Number(responseItem.exp)-100;
-    console.log(responseItem);
-    responseItem.save();
+        responseItem.level = Number(responseItem.level) + 1;
+        responseItem.exp = Number(responseItem.exp) - 100;
+        console.log(responseItem);
+        responseItem.save();
     }
     return responseItem;
 };
