@@ -1,4 +1,5 @@
 import { Types } from "mongoose";
+import { add_Challenge as add_ChallengeUser } from "../services/user";
 
 import { Challenge } from '../interfaces/challenge.interface';
 import ChallengeModel from "../models/challenge";
@@ -59,10 +60,16 @@ const delete_Challenge = async (idChallenge: string) => {
     return responseItem;
 };
 
-const solve_Challenge = async (idChallenge: string, answer: string) => {
+const solve_Challenge = async (idChallenge: string, answer: string, idUser: string) => {
+    console.log("ENTRO EN EL solve_Challenge")
     const chall = await ChallengeModel.findById({_id: idChallenge}); 
+    console.log(`El valor del challenge es ${chall}`)
     if(chall!=null){
         if (answer === chall.answer){
+            console.log("Contestacion OK")
+            const response = await add_ChallengeUser(idUser, idChallenge);
+            console.log(response)
+
             console.log(`Answer ${answer} OK del challenge ${chall._id}`);
             return "ANSWER_OK";
         }

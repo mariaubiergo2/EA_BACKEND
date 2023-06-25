@@ -81,9 +81,21 @@ const delete_Follow = async(idUser: string, idFollowed: string) => {
 };
 
 const add_Challenge = async(idUser: string, idChallenger: string) => {
-    const challenge = await ChallengeModel.findById({_id: idChallenger});
+    console.log("ENTRO EN EL add_Challenge")
+    console.log(`id Challenger es ${idChallenger}`)
+    const chall = await ChallengeModel.findById({_id: idChallenger});
+    console.log(`El challenge es ${chall}`)
+    const awardedExp = chall?.exp;
+    console.log(`La awarded exp es ${awardedExp}`)
     const responseItem = await UserModel.findByIdAndUpdate({_id: idUser},
-        {$addToSet: {record: new Types.ObjectId(challenge?.id)}}, {new: true});
+        {$addToSet: {record: new Types.ObjectId(chall?.id)},$inc: { exp: awardedExp }}, {new: true});
+    console.log(`El responseItem del add_challenge es ${responseItem}`)
+    if (responseItem && Number(responseItem?.exp) >= 100){
+    responseItem.level = Number(responseItem.level) + 1;
+    responseItem.exp = Number(responseItem.exp)-100;
+    console.log(responseItem);
+    responseItem.save();
+    }
     return responseItem;
 };
 

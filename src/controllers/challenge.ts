@@ -100,11 +100,11 @@ const deleteChallenge = async ({params}:Request, res:Response) => {
 
 const solveChallenge = async ({body}:Request, res:Response) => {
     try{
-        const {idChallenge, answer} = body;
-        const response = await solve_Challenge(idChallenge, answer);
+        const {idChallenge, answer, idUser} = body;
+        const response = await solve_Challenge(idChallenge, answer, idUser);
         res.send(response);
     }catch(e){
-        handleHttp(res, "ERROR_ACCEPTING_CHALLENGE");
+        handleHttp(res, "ERROR_SOLVING_CHALLENGE");
     }
 };
 export{ solveChallenge, getAllChallenges, getChallenges, getChallenge, getChallengeCount, addChallenge, updateChallenge, 
