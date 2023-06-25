@@ -4,6 +4,7 @@ import { add_Challenge as add_ChallengeUser } from "../services/user";
 import { Challenge } from '../interfaces/challenge.interface';
 import ChallengeModel from "../models/challenge";
 import UserModel from "../models/user";
+import { User } from "../interfaces/user.interface";
 
 const get_AllChallenges = async() => {
     const responseItem = await ChallengeModel.find({});
@@ -55,6 +56,19 @@ const disable_Challenge = async (idChallenge: string) => {
     return responseItem;
 };
 
+const get_not_completed = async (idUser: string, data: User) => {
+    const user = await UserModel.findById(idUser);
+    if (user){
+        const challengesNotCompleted = await ChallengeModel.find({
+        _id: { $nin: user.record }
+        });
+        return challengesNotCompleted; 
+    }
+    else {
+        return null;
+    }   
+};
+
 const delete_Challenge = async (idChallenge: string) => {
     const responseItem = await ChallengeModel.findByIdAndRemove({_id: idChallenge});
     return responseItem;
@@ -79,5 +93,5 @@ const solve_Challenge = async (idChallenge: string, answer: string, idUser: stri
     
 };
 
-export{ solve_Challenge, get_AllChallenges, get_Challenges, get_Challenge, get_ChallengeCount, add_Challenge, 
+export{ get_not_completed, solve_Challenge, get_AllChallenges, get_Challenges, get_Challenge, get_ChallengeCount, add_Challenge, 
     update_Challenge, accept_Challenge, disable_Challenge, delete_Challenge };

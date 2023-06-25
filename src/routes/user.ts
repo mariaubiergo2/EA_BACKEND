@@ -36,7 +36,7 @@ router.get("/following/count/:idUser", getFollowingCount);
 
 router.get("/friends/unfollowing/count/:idUser", getNotFollowingCount);
 
-router.post("/challenges/add/:idUser/:idChallenge",checkJwt, addChallenge); //Adds a challenge to the list of completed challenges that a user has
+router.post("/challenges/add/:idUser/:idChallenge", addChallenge); //Adds a challenge to the list of completed challenges that a user has
 
 router.post("/disable/:idUser", checkJwt,disableUser); //Disable a user so that he or she is not visible
 router.post("/unable/:idUser", checkJwt,unableUser); //Disable a user so that he or she is not visible
