@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 
 import { handleHttp } from "../utils/error.handle";
-import { get_AllChallenges, get_Challenges, get_Challenge, get_ChallengeCount, add_Challenge, update_Challenge, 
-    accept_Challenge, disable_Challenge, delete_Challenge } from "../services/challenge"; 
+import { solve_Challenge, get_AllChallenges, get_Challenges, get_Challenge, get_ChallengeCount, add_Challenge, update_Challenge, 
+    accept_Challenge, disable_Challenge, delete_Challenge, get_not_completed } from "../services/challenge"; 
 
 const getAllChallenges = async (req:Request, res:Response) => {
     try{
@@ -20,6 +20,16 @@ const getChallenges = async ({params}:Request, res:Response) => {
         res.send(response);
     } catch(e){
         handleHttp(res, "ERROR_GET_CHALLENGES");
+    }
+};
+
+const getAvailableChallenges = async ({params,body}:Request, res:Response) => {
+    try{
+        const {idUser} = params;
+        const response = await get_not_completed(idUser, body);
+        res.send(response);
+    } catch(e){
+        handleHttp(res, "ERROR_GET_NOT_FRIENDS");
     }
 };
 
@@ -48,7 +58,7 @@ const addChallenge = async ({body}:Request, res:Response) => {
         const response = await add_Challenge(body);
         if (response===("ALREADY_USED_NAME")){
             res.status(400);
-            res.send(response)
+            res.send(response);
         }
         else {
             res.send(response);
@@ -64,7 +74,7 @@ const updateChallenge = async ({params, body}:Request, res:Response) => {
         const response = await update_Challenge(idChallenge, body);
         res.send(response);
     } catch (e){
-        handleHttp(res, "ERROR_UPDATE_CHALLENGE")
+        handleHttp(res, "ERROR_UPDATE_CHALLENGE");
     }
 };
 
@@ -98,5 +108,14 @@ const deleteChallenge = async ({params}:Request, res:Response) => {
     }
 };
 
-export{ getAllChallenges, getChallenges, getChallenge, getChallengeCount, addChallenge, updateChallenge, 
+const solveChallenge = async ({body}:Request, res:Response) => {
+    try{
+        const {idChallenge, answer, idUser} = body;
+        const response = await solve_Challenge(idChallenge, answer, idUser);
+        res.send(response);
+    }catch(e){
+        handleHttp(res, "ERROR_SOLVING_CHALLENGE");
+    }
+};
+export{ getAvailableChallenges, solveChallenge, getAllChallenges, getChallenges, getChallenge, getChallengeCount, addChallenge, updateChallenge, 
     acceptChallenge, disableChallenge, deleteChallenge };

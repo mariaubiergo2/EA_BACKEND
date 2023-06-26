@@ -6,7 +6,7 @@ const registerCtrl = async ({ body }: Request, res: Response) => {
   try{
     const response = await registerNewUser(body);
     if (response===("ALREADY_USER")){
-        res.status(400);
+        res.status(220);
         res.send(response);
         console.log("Already User");
     }
@@ -61,15 +61,15 @@ const tokenCtrl = async ({ body }: Request, res: Response) => {
   console.log("Password del user: " + password);
 
   if (responseUser === "PASSWORD_INCORRECT") {
-    res.status(403);
+    res.status(222);
     console.log("Password Incorrect");
     res.send(responseUser);
   } else if (responseUser === "NOT_FOUND_USER") {
-    res.status(403);
+    res.status(221);
     console.log("Not Found User");
     res.send(responseUser);    
   } else if (responseUser === "NOT_ACTIVE_USER") {
-    res.status(403);
+    res.status(220);
     console.log("Not Active User");
     res.send(responseUser);
   } else {

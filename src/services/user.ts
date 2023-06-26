@@ -1,8 +1,10 @@
 import { Types } from "mongoose";
 
-import { User } from '../interfaces/user.interface';
+import { User } from "../interfaces/user.interface";
 import UserModel from "../models/user";
-import ChallengeModel from "../models/user";
+import ChallengeModel from "../models/challenge";
+import ItinerarioModel from "../models/itinerario";
+import { encrypt } from "../utils/bcrypt.handle";
 
 const get_AllUsers = async() => {
     const responseItem = await UserModel.find({});
@@ -36,15 +38,28 @@ const get_UserProfile = async(idUser: string) => {
     return responseItem;
 };
 
+const get_Insignia = async(idUser: string) => {
+    const responseItem = await UserModel.findById({_id: idUser});
+    const response = responseItem?.insignia;
+    return response;
+};
+
+export const add_Insignia = async(idUser: string, idItinerari: string) => {
+    const itinerario = await ItinerarioModel.findById({_id: idItinerari});
+    const responseItem = await UserModel.findByIdAndUpdate({_id: idUser},
+        {$addToSet: {insignia: itinerario?.insignia}}, {new: true});
+    return responseItem;
+};
+
 const log_in = async(email: string, password: string) => {
     const user = await UserModel.findOne({email: email}, {password: password});
     const responseItem = await UserModel.findById({_id: user?.id}, {name: 0, surname: 0,
-        email: 0, password: 0, role: 0, active: 0})
+        email: 0, password: 0, role: 0, active: 0});
     return responseItem;
 };
 
 const sign_up = async(item: User) => {
-    const user = await UserModel.findOne({email: item.email})
+    const user = await UserModel.findOne({email: item.email});
     if (user!=null)
         return "ALREADY_USED_EMAIL";
     if(!item.role) { item.role = "user"; } //If role is not specified then role = "user";
@@ -54,6 +69,9 @@ const sign_up = async(item: User) => {
 };
 
 const update_User = async(idUser: string, data: User) => {
+    if(data.password != null){    
+        data.password = await encrypt(data.password);
+    }
     const responseItem = await UserModel.findByIdAndUpdate({_id: idUser}, data, {new: true});
     return responseItem;
 };
@@ -79,9 +97,32 @@ const delete_Follow = async(idUser: string, idFollowed: string) => {
 };
 
 const add_Challenge = async(idUser: string, idChallenger: string) => {
-    const challenge = await ChallengeModel.findById({_id: idChallenger});
+    console.log("ENTRO EN EL add_Challenge");
+    console.log(`id Challenger es ${idChallenger}`);
+    const chall = await ChallengeModel.findById({_id: idChallenger});
+    console.log(`El challenge es ${chall}`);
+    const awardedExp = chall?.exp;
+    console.log(`La awarded exp es ${awardedExp}`);
+    console.log(`La id del user es ${idUser}`);
     const responseItem = await UserModel.findByIdAndUpdate({_id: idUser},
-        {$addToSet: {record: new Types.ObjectId(challenge?.id)}}, {new: true});
+        {$addToSet: {record: new Types.ObjectId(idChallenger)},$inc: { exp: awardedExp }}, {new: true});
+        console.log(`El responseItem del add_challenge es ${responseItem}`)
+
+    const itin = await ItinerarioModel.findOne({name: chall?.itinerari});
+    const set1 = new Set(responseItem?.record);
+    const set2 = new Set(itin?.challenges);
+    const isSubset = itin?.challenges?.every((element) => responseItem?.record?.includes(element));
+    if (isSubset) {
+        console.log("Todos los challenges del Itinerario estan completados");
+        add_Insignia(responseItem?.id, itin?.id);
+    }       
+
+    if (responseItem && Number(responseItem?.exp) >= 100){
+        responseItem.level = Number(responseItem.level) + 1;
+        responseItem.exp = Number(responseItem.exp) - 100;
+        console.log(responseItem);
+        responseItem.save();
+    }
     return responseItem;
 };
 
@@ -107,8 +148,8 @@ const get_following = async (idUser: string, data: User) => {
         {_id: idUser},
         ).populate({
             path: "following",
-            select: "name surname username level",
-        })
+            select: "name surname username level imageURL",
+        });
     if (responseItem?.following?.length!=0 && responseItem!=null)
     {
         return responseItem.following;
@@ -122,7 +163,7 @@ const get_following_count = async (idUser: string, data: User) => {
         ).populate({
             path: "following",
             select: "name surname username",
-        })
+        });
     if (responseItem?.following?.length!=0 && responseItem!=null)
     {
         return responseItem.following?.length;
@@ -135,8 +176,8 @@ const get_followers = async (idUser: string, data: User) => {
         {_id: idUser},
         ).populate({
             path: "followers",
-            select: "name surname username level",
-        })
+            select: "name surname username level imageURL",
+        });
     if (responseItem?.followers?.length!=0 && responseItem!=null)
     {
         return responseItem.followers;
@@ -150,7 +191,7 @@ const get_followers_count = async (idUser: string, data: User) => {
         ).populate({
             path: "followers",
             select: "name surname username",
-        })
+        });
     if (responseItem?.followers?.length!=0 && responseItem!=null)
     {
         return responseItem.followers?.length;
@@ -170,7 +211,19 @@ const get_not_following = async (idUser: string, data: User) => {
         return null;
     }   
 };
-
+const get_History = async (idUser: string, data: User) => {
+    const responseItem = await UserModel.findById(
+        {_id: idUser},
+        ).populate({
+            path: "record",
+            select: "name descr exp",
+        });
+    if (responseItem?.record?.length!=0 && responseItem!=null)
+    {
+        return responseItem.record;
+    }
+        return responseItem;
+};
 const get_not_following_count = async (idUser: string, data: User) => {
     const user = await UserModel.findById(idUser);
     if (user){
@@ -189,5 +242,5 @@ const get_not_following_count = async (idUser: string, data: User) => {
 export { get_AllUsers, get_Users, get_User, get_UserCount, get_UsersProfile, get_UserProfile, log_in,
     sign_up, update_User, add_Follow, delete_Follow, add_Challenge, disable_User, delete_User, 
     unable_User, get_following, get_not_following, get_following_count, get_followers_count, 
-    get_not_following_count, get_followers };
+    get_not_following_count, get_followers, get_History, get_Insignia };
 

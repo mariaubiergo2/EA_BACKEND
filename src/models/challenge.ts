@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 import { Schema, model } from "mongoose";
 
 import { Challenge } from "../interfaces/challenge.interface";
@@ -24,6 +25,14 @@ const ChallengeSchema = new Schema<Challenge>(
             type: Number,
             required: true,
         },
+        questions:{
+            type:[String],
+            required:false,
+        },
+        answer: {
+            type: String,
+            required: false,
+        },
         users: {
             type: [Schema.Types.ObjectId],
             ref: 'users',
@@ -31,7 +40,11 @@ const ChallengeSchema = new Schema<Challenge>(
         active: {
             type: Boolean,
             required: false,
-        }
+        },
+        itinerari: {
+            type: String,
+            required: false,
+        },
     },
     {
         timestamps: true,

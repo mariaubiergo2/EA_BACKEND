@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 import { Schema, model } from "mongoose";
 
 import { User } from "../interfaces/user.interface";
@@ -56,8 +57,12 @@ const UserSchema = new Schema<User>(
         active: {
             type: Boolean,
             required: false,
-        }
-        
+        },
+        insignia: {
+            type: [String],
+            // enum: ["becari", "junior", "amateur", "sensei", "c-master"],
+            required: false,
+        }        
     },
     {
         timestamps: true,
