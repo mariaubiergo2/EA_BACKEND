@@ -13,7 +13,7 @@ const router = Router();
 
 router.get("/get/all", checkJwt,getAllUsers); //Get all users
 router.get("/get/pagination/:pageNumber/:nPerPage", checkJwt,getUsers); //Get some users
-router.get("/get/:idUser",checkJwt, getUser); //Get only the information of one user
+router.get("/get/:idUser", getUser); //Get only the information of one user
 
 router.get("/count",checkJwt, getUserCount); //Return the total number of active users
 
