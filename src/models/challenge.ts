@@ -39,7 +39,11 @@ const ChallengeSchema = new Schema<Challenge>(
         active: {
             type: Boolean,
             required: false,
-        }
+        },
+        itinerari: {
+            type: String,
+            required: false,
+        },
     },
     {
         timestamps: true,
