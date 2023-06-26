@@ -55,7 +55,9 @@ const sign_up = async(item: User) => {
 };
 
 const update_User = async(idUser: string, data: User) => {
-    data.password = await encrypt(data.password);
+    if(data.password != null){    
+        data.password = await encrypt(data.password);
+    }
     const responseItem = await UserModel.findByIdAndUpdate({_id: idUser}, data, {new: true});
     return responseItem;
 };
