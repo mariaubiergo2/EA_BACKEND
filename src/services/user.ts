@@ -3,6 +3,7 @@ import { Types } from "mongoose";
 import { User } from '../interfaces/user.interface';
 import UserModel from "../models/user";
 import ChallengeModel from "../models/challenge";
+import ItinerarioModel from "../models/itinerario";
 import { encrypt } from "../utils/bcrypt.handle";
 
 const get_AllUsers = async() => {
@@ -41,6 +42,13 @@ const get_Insignia = async(idUser: string) => {
     const responseItem = await UserModel.findById({_id: idUser});
     const response = responseItem?.insignia;
     return response;
+};
+
+export const add_Insignia = async(idUser: string, idItinerari: string) => {
+    const itinerario = await ItinerarioModel.findById({_id: idItinerari});
+    const responseItem = await UserModel.findByIdAndUpdate({_id: idUser},
+        {$addToSet: {insignia: itinerario?.insignia}}, {new: true});
+    return responseItem;
 };
 
 const log_in = async(email: string, password: string) => {

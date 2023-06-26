@@ -15,6 +15,10 @@ const ItinerarioSchema = new Schema<Itinerario>(
         challenges: {
             type: [Schema.Types.ObjectId],
             ref: 'challenges',
+        },
+        insignia: {
+            type: String,
+            required: false
         }
     },
     {

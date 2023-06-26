@@ -5,7 +5,7 @@ import {registerCtrl, tokenCtrl} from "../controllers/auth"
 import { getAllUsers, getUsers, getUser, getUserCount, getUsersProfile, getUserProfile, updateUser,
      addFollow, deleteFollow, addChallenge, disableUser, deleteUser, unableUser, getFollowing, 
      getNotFollowing, getFollowersCount, getNotFollowingCount, getFollowingCount, getFollowers, 
-     getHistory, getInsignia } from "../controllers/user";
+     getHistory, getInsignia, addInsignia} from "../controllers/user";
 
 const router =  Router();
 
@@ -21,6 +21,8 @@ router.get("/count",checkJwt, getUserCount); //Return the total number of active
 router.get("/profile/all/:pageNumber/:nPerPage",checkJwt, getUsersProfile); //Get all users information profile
 router.get("/profile/:idUser", checkJwt, getUserProfile); //Get only the information of one user profile
 router.get("/get/insignia/:idUser",checkJwt, getInsignia); //Get the insignias of the user
+router.post("/challenges/addinsignia/:idUser/:idItinerari",checkJwt, addInsignia);
+
 
 router.post("/token",checkJwt, tokenCtrl); //PER FER EL LOGIN
 
