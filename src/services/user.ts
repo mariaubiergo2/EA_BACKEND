@@ -3,6 +3,7 @@ import { Types } from "mongoose";
 import { User } from "../interfaces/user.interface";
 import UserModel from "../models/user";
 import ChallengeModel from "../models/challenge";
+import ItinerarioModel from "../models/itinerario";
 import { encrypt } from "../utils/bcrypt.handle";
 
 const get_AllUsers = async() => {
@@ -34,6 +35,19 @@ const get_UsersProfile = async(pageNumber: number, nPerPage: number) => {
 const get_UserProfile = async(idUser: string) => {
     const responseItem = await UserModel.findById({_id: idUser}, {name: 0, surname: 0,
         email: 0, password: 0, role: 0, active: 0}); //Ignore those properties
+    return responseItem;
+};
+
+const get_Insignia = async(idUser: string) => {
+    const responseItem = await UserModel.findById({_id: idUser});
+    const response = responseItem?.insignia;
+    return response;
+};
+
+export const add_Insignia = async(idUser: string, idItinerari: string) => {
+    const itinerario = await ItinerarioModel.findById({_id: idItinerari});
+    const responseItem = await UserModel.findByIdAndUpdate({_id: idUser},
+        {$addToSet: {insignia: itinerario?.insignia}}, {new: true});
     return responseItem;
 };
 
@@ -92,7 +106,17 @@ const add_Challenge = async(idUser: string, idChallenger: string) => {
     console.log(`La id del user es ${idUser}`);
     const responseItem = await UserModel.findByIdAndUpdate({_id: idUser},
         {$addToSet: {record: new Types.ObjectId(idChallenger)},$inc: { exp: awardedExp }}, {new: true});
-        console.log(`El responseItem del add_challenge es ${responseItem}`);
+        console.log(`El responseItem del add_challenge es ${responseItem}`)
+
+    const itin = await ItinerarioModel.findOne({name: chall?.itinerari});
+    const set1 = new Set(responseItem?.record);
+    const set2 = new Set(itin?.challenges);
+    const isSubset = itin?.challenges?.every((element) => responseItem?.record?.includes(element));
+    if (isSubset) {
+        console.log("Todos los challenges del Itinerario estan completados");
+        add_Insignia(responseItem?.id, itin?.id);
+    }       
+
     if (responseItem && Number(responseItem?.exp) >= 100){
         responseItem.level = Number(responseItem.level) + 1;
         responseItem.exp = Number(responseItem.exp) - 100;
@@ -218,5 +242,5 @@ const get_not_following_count = async (idUser: string, data: User) => {
 export { get_AllUsers, get_Users, get_User, get_UserCount, get_UsersProfile, get_UserProfile, log_in,
     sign_up, update_User, add_Follow, delete_Follow, add_Challenge, disable_User, delete_User, 
     unable_User, get_following, get_not_following, get_following_count, get_followers_count, 
-    get_not_following_count, get_followers, get_History };
+    get_not_following_count, get_followers, get_History, get_Insignia };
 

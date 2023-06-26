@@ -2,7 +2,8 @@ import { Request, Response } from "express";
 import { handleHttp } from "../utils/error.handle";
 import { get_AllUsers, get_User, get_Users, get_UserCount, get_UsersProfile, get_UserProfile, log_in,
     sign_up, update_User, add_Follow, delete_Follow, add_Challenge, disable_User, delete_User, unable_User,
-     get_following, get_not_following, get_following_count, get_followers_count, get_not_following_count, get_followers, get_History } from "../services/user";
+     get_following, get_not_following, get_following_count, get_followers_count, get_not_following_count, get_followers, 
+     get_History, get_Insignia, add_Insignia  } from "../services/user";
 import { encrypt } from "../utils/bcrypt.handle";
 
 const getAllUsers = async(req:Request, res:Response) => {
@@ -62,6 +63,27 @@ const getUserProfile = async({params}:Request, res:Response) => {
         res.send(data);
     } catch(e){
         handleHttp(res, "ERROR_GET_USER");
+    }
+};
+
+const getInsignia = async({params}:Request, res:Response) => {
+    try{
+        const {idUser} = params;
+        const response = await get_Insignia(idUser);
+        const data = response ? response: "NO_INSIGNIAS";
+        res.send(data);
+    } catch(e){
+        handleHttp(res, "ERROR_GET_INSIGNIA");
+    }
+};
+
+export const addInsignia = async ({params}:Request, res:Response) => {
+    try{
+        const {idUser, idItinerari} = params;
+        const response = await add_Insignia(idUser, idItinerari);
+        res.send(response);
+    }catch(e){
+        handleHttp(res, "ERROR_POST_USER");
     }
 };
 
@@ -236,4 +258,5 @@ const getNotFollowingCount = async ({params, body}:Request, res:Response) => {
 
 export{ getAllUsers, getUser, getUsers, getUserCount, getUsersProfile, getUserProfile, login,
     signup, updateUser, addFollow, deleteFollow, addChallenge, disableUser, deleteUser, unableUser,
-    getFollowersCount, getNotFollowingCount, getFollowingCount, getFollowing, getNotFollowing, getFollowers, getHistory };
+    getFollowersCount, getNotFollowingCount, getFollowingCount, getFollowing, getNotFollowing, getFollowers, 
+    getHistory, getInsignia };
