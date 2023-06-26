@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { checkJwt,checkAdmin } from "../middleware/session";
-import {registerCtrl, tokenCtrl} from "../controllers/auth"
+import {registerCtrl, tokenCtrl} from "../controllers/auth";
 
 import { getAllUsers, getUsers, getUser, getUserCount, getUsersProfile, getUserProfile, updateUser,
      addFollow, deleteFollow, addChallenge, disableUser, deleteUser, unableUser, getFollowing, 

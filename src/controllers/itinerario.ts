@@ -17,7 +17,7 @@ export const addItinerario = async ({body}:Request, res:Response) => {
         const response = await add_Itinerario(body);
         if (response===("ALREADY_USED_NAME")){
             res.status(400);
-            res.send(response)
+            res.send(response);
         }
         else {
             res.send(response);

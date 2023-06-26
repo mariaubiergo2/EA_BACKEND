@@ -22,7 +22,7 @@ app.listen(PORT, () => console.log(`Hey! Listening by the port ${PORT}.`));
 
 const port = config.get<number>("port");
 const host = config.get<string>("host");
-const corsOrigin = "*"
+const corsOrigin = "*";
 
 const httpServer = createServer(app);
 

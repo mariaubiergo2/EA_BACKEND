@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 import { Schema, model } from "mongoose";
 
 import { Challenge } from "../interfaces/challenge.interface";

@@ -27,9 +27,9 @@ const getAvailableChallenges = async ({params,body}:Request, res:Response) => {
     try{
         const {idUser} = params;
         const response = await get_not_completed(idUser, body);
-        res.send(response)
+        res.send(response);
     } catch(e){
-        handleHttp(res, "ERROR_GET_NOT_FRIENDS")
+        handleHttp(res, "ERROR_GET_NOT_FRIENDS");
     }
 };
 
@@ -58,7 +58,7 @@ const addChallenge = async ({body}:Request, res:Response) => {
         const response = await add_Challenge(body);
         if (response===("ALREADY_USED_NAME")){
             res.status(400);
-            res.send(response)
+            res.send(response);
         }
         else {
             res.send(response);
@@ -74,7 +74,7 @@ const updateChallenge = async ({params, body}:Request, res:Response) => {
         const response = await update_Challenge(idChallenge, body);
         res.send(response);
     } catch (e){
-        handleHttp(res, "ERROR_UPDATE_CHALLENGE")
+        handleHttp(res, "ERROR_UPDATE_CHALLENGE");
     }
 };
 

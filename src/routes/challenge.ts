@@ -16,7 +16,7 @@ router.post("/add",checkJwt, addChallenge); //Create a challenge
 router.post("/update/:idChallenge",checkJwt, updateChallenge); //Update the details of a challenge
 
 router.post("/accept/:idUser/:idChallenge",checkJwt, acceptChallenge); //Add a user to the challenge
-router.post("/post/solve",  solveChallenge)
+router.post("/post/solve",  solveChallenge);
 router.post("/disable/:idChallenge",checkJwt, disableChallenge); //Disable a challenge so that it is not visible
 router.delete("/delete/:idChallenge",checkJwt, deleteChallenge); //Remove a challenge permanently
 

@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
 
-import { User } from '../interfaces/user.interface';
+import { User } from "../interfaces/user.interface";
 import UserModel from "../models/user";
 import ChallengeModel from "../models/challenge";
 import { encrypt } from "../utils/bcrypt.handle";
@@ -40,12 +40,12 @@ const get_UserProfile = async(idUser: string) => {
 const log_in = async(email: string, password: string) => {
     const user = await UserModel.findOne({email: email}, {password: password});
     const responseItem = await UserModel.findById({_id: user?.id}, {name: 0, surname: 0,
-        email: 0, password: 0, role: 0, active: 0})
+        email: 0, password: 0, role: 0, active: 0});
     return responseItem;
 };
 
 const sign_up = async(item: User) => {
-    const user = await UserModel.findOne({email: item.email})
+    const user = await UserModel.findOne({email: item.email});
     if (user!=null)
         return "ALREADY_USED_EMAIL";
     if(!item.role) { item.role = "user"; } //If role is not specified then role = "user";
@@ -83,16 +83,16 @@ const delete_Follow = async(idUser: string, idFollowed: string) => {
 };
 
 const add_Challenge = async(idUser: string, idChallenger: string) => {
-    console.log("ENTRO EN EL add_Challenge")
-    console.log(`id Challenger es ${idChallenger}`)
+    console.log("ENTRO EN EL add_Challenge");
+    console.log(`id Challenger es ${idChallenger}`);
     const chall = await ChallengeModel.findById({_id: idChallenger});
-    console.log(`El challenge es ${chall}`)
+    console.log(`El challenge es ${chall}`);
     const awardedExp = chall?.exp;
-    console.log(`La awarded exp es ${awardedExp}`)
-    console.log(`La id del user es ${idUser}`)
+    console.log(`La awarded exp es ${awardedExp}`);
+    console.log(`La id del user es ${idUser}`);
     const responseItem = await UserModel.findByIdAndUpdate({_id: idUser},
         {$addToSet: {record: new Types.ObjectId(idChallenger)},$inc: { exp: awardedExp }}, {new: true});
-        console.log(`El responseItem del add_challenge es ${responseItem}`)
+        console.log(`El responseItem del add_challenge es ${responseItem}`);
     if (responseItem && Number(responseItem?.exp) >= 100){
         responseItem.level = Number(responseItem.level) + 1;
         responseItem.exp = Number(responseItem.exp) - 100;
@@ -125,7 +125,7 @@ const get_following = async (idUser: string, data: User) => {
         ).populate({
             path: "following",
             select: "name surname username level imageURL",
-        })
+        });
     if (responseItem?.following?.length!=0 && responseItem!=null)
     {
         return responseItem.following;
@@ -139,7 +139,7 @@ const get_following_count = async (idUser: string, data: User) => {
         ).populate({
             path: "following",
             select: "name surname username",
-        })
+        });
     if (responseItem?.following?.length!=0 && responseItem!=null)
     {
         return responseItem.following?.length;
@@ -153,7 +153,7 @@ const get_followers = async (idUser: string, data: User) => {
         ).populate({
             path: "followers",
             select: "name surname username level imageURL",
-        })
+        });
     if (responseItem?.followers?.length!=0 && responseItem!=null)
     {
         return responseItem.followers;
@@ -167,7 +167,7 @@ const get_followers_count = async (idUser: string, data: User) => {
         ).populate({
             path: "followers",
             select: "name surname username",
-        })
+        });
     if (responseItem?.followers?.length!=0 && responseItem!=null)
     {
         return responseItem.followers?.length;
@@ -193,7 +193,7 @@ const get_History = async (idUser: string, data: User) => {
         ).populate({
             path: "record",
             select: "name descr exp",
-        })
+        });
     if (responseItem?.record?.length!=0 && responseItem!=null)
     {
         return responseItem.record;

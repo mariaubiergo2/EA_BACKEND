@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 import { Schema, model } from "mongoose";
 
 import { Itinerario } from "../interfaces/itinerario.interface";

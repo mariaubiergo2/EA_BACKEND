@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 import { Schema, model } from "mongoose";
 
 import { User } from "../interfaces/user.interface";
