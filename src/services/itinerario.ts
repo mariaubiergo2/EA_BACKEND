@@ -4,7 +4,7 @@ import { Itinerario } from '../interfaces/itinerario.interface';
 import ItinerarioModel from "../models/itinerario";
 
 export const get_AllItinerarios = async() => {
-    const responseItem = await ItinerarioModel.find({});
+    const responseItem = await ItinerarioModel.find({}).populate({path: "challenges", select: "name descr exp"});
     return responseItem;
 };
 
