@@ -37,6 +37,12 @@ const get_UserProfile = async(idUser: string) => {
     return responseItem;
 };
 
+const get_Insignia = async(idUser: string) => {
+    const responseItem = await UserModel.findById({_id: idUser});
+    const response = responseItem?.insignia;
+    return response;
+};
+
 const log_in = async(email: string, password: string) => {
     const user = await UserModel.findOne({email: email}, {password: password});
     const responseItem = await UserModel.findById({_id: user?.id}, {name: 0, surname: 0,
@@ -218,5 +224,5 @@ const get_not_following_count = async (idUser: string, data: User) => {
 export { get_AllUsers, get_Users, get_User, get_UserCount, get_UsersProfile, get_UserProfile, log_in,
     sign_up, update_User, add_Follow, delete_Follow, add_Challenge, disable_User, delete_User, 
     unable_User, get_following, get_not_following, get_following_count, get_followers_count, 
-    get_not_following_count, get_followers, get_History };
+    get_not_following_count, get_followers, get_History, get_Insignia };
 
