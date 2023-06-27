@@ -106,7 +106,7 @@ const add_Challenge = async(idUser: string, idChallenger: string) => {
     console.log(`La id del user es ${idUser}`);
     const responseItem = await UserModel.findByIdAndUpdate({_id: idUser},
         {$addToSet: {record: new Types.ObjectId(idChallenger)},$inc: { exp: awardedExp }}, {new: true});
-        console.log(`El responseItem del add_challenge es ${responseItem}`)
+        console.log(`El responseItem del add_challenge es ${responseItem}`);
 
     const itin = await ItinerarioModel.findOne({name: chall?.itinerari});
     const set1 = new Set(responseItem?.record);
@@ -148,7 +148,7 @@ const get_following = async (idUser: string, data: User) => {
         {_id: idUser},
         ).populate({
             path: "following",
-            select: "name surname username level imageURL",
+            select: "name surname username level imageURL active",
         });
     if (responseItem?.following?.length!=0 && responseItem!=null)
     {
@@ -176,7 +176,7 @@ const get_followers = async (idUser: string, data: User) => {
         {_id: idUser},
         ).populate({
             path: "followers",
-            select: "name surname username level imageURL",
+            select: "name surname username level imageURL active",
         });
     if (responseItem?.followers?.length!=0 && responseItem!=null)
     {
