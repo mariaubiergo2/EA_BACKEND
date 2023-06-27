@@ -148,7 +148,7 @@ const get_following = async (idUser: string, data: User) => {
         {_id: idUser},
         ).populate({
             path: "following",
-            select: "name surname username level imageURL",
+            select: "name surname username level imageURL active",
         });
     if (responseItem?.following?.length!=0 && responseItem!=null)
     {
@@ -176,7 +176,7 @@ const get_followers = async (idUser: string, data: User) => {
         {_id: idUser},
         ).populate({
             path: "followers",
-            select: "name surname username level imageURL",
+            select: "name surname username level imageURL active",
         });
     if (responseItem?.followers?.length!=0 && responseItem!=null)
     {
