@@ -1,6 +1,8 @@
 import { Router } from "express";
 
-import {getAvailableChallenges, solveChallenge, getAllChallenges, getChallenges, getChallenge, getChallengeCount, addChallenge, updateChallenge, acceptChallenge, disableChallenge, deleteChallenge } from "../controllers/challenge";  
+import {getAvailableChallenges, solveChallenge, getAllChallenges,
+     getChallenges, getChallenge, getChallengeCount, addChallenge, updateChallenge,
+      acceptChallenge, disableChallenge, deleteChallenge, getIfDone } from "../controllers/challenge";  
 import { checkJwt } from "../middleware/session";
 
 const router = Router();
@@ -19,5 +21,7 @@ router.post("/accept/:idUser/:idChallenge",checkJwt, acceptChallenge); //Add a u
 router.post("/post/solve",  solveChallenge);
 router.post("/disable/:idChallenge",checkJwt, disableChallenge); //Disable a challenge so that it is not visible
 router.delete("/delete/:idChallenge",checkJwt, deleteChallenge); //Remove a challenge permanently
+
+router.get("/get", getIfDone);
 
 export{ router };

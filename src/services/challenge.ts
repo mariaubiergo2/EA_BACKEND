@@ -50,6 +50,17 @@ const accept_Challenge = async (idUser: string, idChallenge: string) => {
     return responseItem;
 };
 
+const get_If_Done = async (idUser: string, nameChallenge: string) => {
+    const user = await UserModel.findById(idUser);
+    const challenge = await ChallengeModel.findOne({ name: nameChallenge });
+  
+    if (user?.record && challenge && user.record.includes(challenge._id)) {
+      return true;
+    }
+    return false;
+  };
+  
+
 const disable_Challenge = async (idChallenge: string) => {
     const responseItem = await ChallengeModel.findByIdAndUpdate({_id: idChallenge}, 
         {active: false}, {new: true});
@@ -95,5 +106,6 @@ const solve_Challenge = async (idChallenge: string, answer: string, idUser: stri
     
 };
 
-export{ get_not_completed, solve_Challenge, get_AllChallenges, get_Challenges, get_Challenge, get_ChallengeCount, add_Challenge, 
+export{ get_not_completed, solve_Challenge, get_AllChallenges, get_Challenges,
+     get_Challenge, get_ChallengeCount, add_Challenge, get_If_Done,
     update_Challenge, accept_Challenge, disable_Challenge, delete_Challenge };
