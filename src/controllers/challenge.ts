@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 
 import { handleHttp } from "../utils/error.handle";
-import { solve_Challenge, get_AllChallenges, get_Challenges, get_Challenge, get_ChallengeCount, add_Challenge, update_Challenge, 
+import { solve_Challenge, get_AllChallenges, get_Challenges, get_Challenge,
+     get_ChallengeCount, add_Challenge, update_Challenge, get_If_Done,
     accept_Challenge, disable_Challenge, delete_Challenge, get_not_completed } from "../services/challenge"; 
 
 const getAllChallenges = async (req:Request, res:Response) => {
@@ -108,6 +109,17 @@ const deleteChallenge = async ({params}:Request, res:Response) => {
     }
 };
 
+const getIfDone = async ({body}:Request, res:Response) => {
+    try{
+        const {idUser, nameChallenge} = body;
+        
+        const response = await get_If_Done(idUser, nameChallenge);
+        res.send(response);
+    } catch(e){
+        handleHttp(res, "ERROR_GETIFDONE_CHALLENGE");
+    }
+};
+
 const solveChallenge = async ({body}:Request, res:Response) => {
     try{
         const {idChallenge, answer, idUser} = body;
@@ -117,5 +129,6 @@ const solveChallenge = async ({body}:Request, res:Response) => {
         handleHttp(res, "ERROR_SOLVING_CHALLENGE");
     }
 };
-export{ getAvailableChallenges, solveChallenge, getAllChallenges, getChallenges, getChallenge, getChallengeCount, addChallenge, updateChallenge, 
-    acceptChallenge, disableChallenge, deleteChallenge };
+export{ getAvailableChallenges, solveChallenge, getAllChallenges,
+     getChallenges, getChallenge, getChallengeCount, addChallenge, updateChallenge, 
+    acceptChallenge, disableChallenge, deleteChallenge, getIfDone };
